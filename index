@@ -305,7 +305,7 @@
         btn.disabled = true;
         
         // inserisci qui il link esecutivo fornito da google apps script
-        var urlApi = "INSERISCI_QUI_URL_DELLA_WEBAPP_GOOGLE";
+        var urlApi = "https://script.google.com/macros/s/AKfycbwh2xsWFnTRM_uD69wO1Eh3YA5y0Z1mIw48Ky-VUdZ61KhCe2D5fIXCWHw5SbhVs91H/exec";
         
         try {
           var response = await fetch(urlApi + "?email=" + encodeURIComponent(email), { redirect: 'follow' });
