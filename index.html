@@ -107,10 +107,6 @@
       .digital-features li { margin-bottom: 15px; font-size: 16px; }
       .digital-features i { color: var(--accent-color); margin-right: 15px; font-size: 20px; }
 
-      .cta-section { background: var(--accent-color); color: var(--brand-color); padding: 80px 20px; text-align: center; }
-      .cta-section h2 { font-size: 32px; margin-bottom: 20px; text-transform: uppercase; }
-      .cta-section p { font-size: 18px; max-width: 800px; margin: 0 auto 35px auto; line-height: 1.7; font-weight: 500; }
-
       .client-area-wrapper { display: none; padding: 80px 20px; min-height: 70vh; background: var(--bg-light); }
       .login-box { background: white; max-width: 500px; margin: 0 auto; padding: 50px 40px; border-radius: var(--radius); border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; }
       .login-icon { font-size: 45px; color: var(--brand-color); margin-bottom: 25px; }
@@ -144,7 +140,6 @@
       .footer-col i { width: 25px; color: var(--accent-color); }
       .footer-bottom { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; opacity: 0.6; text-transform: uppercase; }
 
-      /* ottimizzazione per dispositivi mobili e schermi stretti */
       @media (max-width: 768px) {
         .navbar { flex-direction: column; gap: 15px; text-align: center; }
         .hero { padding: 70px 20px; }
@@ -192,8 +187,8 @@
       <div class="partners-section">
         <h2 class="section-title" style="font-size: 22px; color: #7f8c8d;">Agenzia plurimandataria</h2>
         <div class="partners-grid">
-          <img src="LINK_LOGO_BENE_ASSICURAZIONI.png" alt="Bene Assicurazioni" class="partner-logo-img">
-          <img src="LINK_LOGO_REALE_MUTUA.png" alt="Reale Mutua" class="partner-logo-img">
+          <img src="bene.png" alt="Bene Assicurazioni" class="partner-logo-img">
+          <img src="reale.png" alt="Reale Mutua" class="partner-logo-img">
         </div>
       </div>
 
@@ -210,151 +205,6 @@
           <button class="btn-primary" style="margin-top: 20px;" onclick="mostraAreaCliente()">Accedi ora</button>
         </div>
       </div>
-
-      <div class="cta-section">
-        <h2>Analisi tecnica e preventivazione</h2>
-        <p>I nostri consulenti sono a disposizione per una revisione gratuita del tuo attuale portafoglio assicurativo. Identifichiamo eventuali sovrapposizioni o carenze di garanzia, strutturando un'offerta ottimizzata sui reali rischi a cui sei esposto.</p>
-        <button class="btn-primary" style="padding: 18px 36px; border: 2px solid var(--brand-color);" onclick="window.scrollTo(0, document.body.scrollHeight)">Contatta la sede più vicina</button>
-      </div>
     </div>
 
     <div id="areaCliente" class="client-area-wrapper">
-      <div class="login-box" id="box-login">
-        <i class="fas fa-server login-icon"></i>
-        <h2>Connessione database</h2>
-        <p>Inserisci l'indirizzo email o il numero di telefono comunicato in agenzia per avviare l'estrazione dei dati contrattuali.</p>
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="emailInput" placeholder="Email o telefono registrato">
-        </div>
-        <button class="btn-action" onclick="cerca()"><i class="fas fa-database"></i> Avvia ricerca</button>
-        <button class="btn-primary" style="width: 100%; margin-top: 15px; border: 1px solid #bdc3c7;" onclick="mostraHome()">Annulla operazione</button>
-        <div id="messaggio-errore" style="margin-top: 20px; color: var(--danger); display: none; font-weight: 600; font-size: 14px;"></div>
-      </div>
-
-      <div id="dashboard-container">
-        <div class="dashboard-header">
-          <div>
-            <h2><i class="fas fa-file-contract"></i> Estratto conto polizze</h2>
-            <p style="color: #7f8c8d; margin: 8px 0 0 0; font-size: 14px;">Dati sincronizzati con il gestionale Forlenza Rio.</p>
-          </div>
-          <button class="btn-outline" onclick="resetRicerca()"><i class="fas fa-times"></i> Termina sessione</button>
-        </div>
-        <div class="policies-grid" id="risultati"></div>
-      </div>
-    </div>
-    
-    <div class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Sede centrale</h4>
-          <p><i class="fas fa-map-marker-alt"></i> Contursi Terme (SA)</p>
-          <p><i class="fas fa-phone"></i> 0828 791266</p>
-        </div>
-        <div class="footer-col">
-          <h4>Sede secondaria</h4>
-          <p><i class="fas fa-map-marker-alt"></i> Oliveto Citra (SA)</p>
-          <p><i class="fas fa-phone"></i> 0828 798312</p>
-        </div>
-        <div class="footer-col">
-          <h4>Amministrazione centrale</h4>
-          <p><i class="fas fa-envelope"></i> forlenzarioassicurazioni@gmail.com</p>
-          <p><i class="fas fa-clock"></i> Lun - Ven: 09:00 - 13:00 / 15:30 - 19:00</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        &copy; 2026 Forlenza Rio consulenza assicurativa.
-      </div>
-    </div>
-
-    <script>
-      function mostraAreaCliente() {
-        document.getElementById('vistaHome').style.display = 'none';
-        document.getElementById('areaCliente').style.display = 'block';
-        resetRicerca(); window.scrollTo(0,0);
-      }
-
-      function mostraHome() {
-        document.getElementById('areaCliente').style.display = 'none';
-        document.getElementById('vistaHome').style.display = 'block';
-        window.scrollTo(0,0);
-      }
-
-      function resetRicerca() {
-        document.getElementById('box-login').style.display = 'block';
-        document.getElementById('dashboard-container').style.display = 'none';
-        document.getElementById('emailInput').value = '';
-        document.getElementById('messaggio-errore').style.display = 'none';
-      }
-
-      function mostraErrore(testo) {
-        var divErrore = document.getElementById('messaggio-errore');
-        divErrore.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + testo;
-        divErrore.style.display = 'block';
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-database"></i> Avvia ricerca';
-        btn.disabled = false;
-      }
-
-      async function cerca() {
-        var contatto = document.getElementById('emailInput').value;
-        if (!contatto) return mostraErrore('ERRORE: compilare il campo con email o telefono.');
-        
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Elaborazione in corso...';
-        btn.disabled = true;
-        
-        // inserisci qui il link esecutivo fornito da google apps script
-        var urlApi = "https://script.google.com/macros/s/AKfycbwh2xsWFnTRM_uD69wO1Eh3YA5y0Z1mIw48Ky-VUdZ61KhCe2D5fIXCWHw5SbhVs91H/exec";
-        
-        try {
-          var response = await fetch(urlApi + "?contatto=" + encodeURIComponent(contatto), { redirect: 'follow' });
-          var dati = await response.json();
-          
-          if (dati.errore) return mostraErrore(dati.errore);
-          if (dati.length === 0) return mostraErrore('anagrafica non rilevata nel sistema.');
-          
-          mostraRisultati(dati);
-        } catch (error) {
-          mostraErrore('errore di connessione al database centrale.');
-        }
-      }
-
-      function getIconaPerTipo(tipo) {
-        var t = tipo.toLowerCase();
-        if(t.indexOf('auto') > -1 || t.indexOf('veicoli') > -1 || t.indexOf('moto') > -1) return 'fa-car';
-        if(t.indexOf('casa') > -1 || t.indexOf('fabbricato') > -1) return 'fa-home';
-        if(t.indexOf('vita') > -1 || t.indexOf('salute') > -1) return 'fa-heartbeat';
-        if(t.indexOf('infortuni') > -1) return 'fa-crutch';
-        if(t.indexOf('azienda') > -1 || t.indexOf('impresa') > -1) return 'fa-industry';
-        return 'fa-file-invoice';
-      }
-
-      function mostraRisultati(polizze) {
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-database"></i> Avvia ricerca';
-        btn.disabled = false;
-
-        document.getElementById('box-login').style.display = 'none';
-        document.getElementById('dashboard-container').style.display = 'block';
-        document.getElementById('messaggio-errore').style.display = 'none';
-
-        var div = document.getElementById('risultati');
-        var html = '';
-        
-        for (var i = 0; i < polizze.length; i++) {
-          var icona = getIconaPerTipo(polizze[i].tipo);
-          
-          html += '<div class="policy-card">';
-          html += '<i class="fas ' + icona + ' policy-icon"></i>';
-          html += '<div class="policy-type">' + polizze[i].tipo + '</div>';
-          html += '<div class="policy-number">Rif: ' + polizze[i].numero + '</div>';
-          html += '<div class="policy-date"><i class="far fa-calendar-alt" style="color: var(--brand-color);"></i>Scadenza: <span style="color: var(--danger);">' + polizze[i].scadenza + '</span></div>';
-          html += '<div class="status-badge status-active">Operativa</div>';
-          html += '</div>';
-        }
-        div.innerHTML = html;
-      }
-    </script>
-  </body>
-</html>
