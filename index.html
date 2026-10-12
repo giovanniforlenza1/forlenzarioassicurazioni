@@ -126,7 +126,7 @@
 
     <script>
       const TOKEN = "SEGRETO_FORLENZA_2026";
-      const URL_API = "https://script.google.com/macros/s/AKfycbx6PFgpl1K-0pY3uIHqFLwUX4rtJwlTaaQVi4FeDl_qqEpIX-jpO_XXaUkdSNIBnPcf0w/exec";
+      const URL_API = "https://script.google.com/macros/s/AKfycbxwCGf7req_02xigi9qO70LEKqnAMjkvUR68UoPsYcuUCQHaQVEzdEUF0tex1rg8FeS5g/exec";
       var profiliTrovati = [];
       var currentCF = "";
 
@@ -158,12 +158,14 @@
           
           if (dati.errore) { errDiv.innerText = dati.errore; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = ''; return; }
           
-          profiliTrovati = dati;
+          profiliTrovati = Array.isArray(dati) ? dati : [];
           
           if (profiliTrovati.length === 1) {
              mostraDettaglioProfilo(0, false);
-          } else {
+          } else if (profiliTrovati.length > 1) {
              mostraListaProfili();
+          } else {
+             errDiv.innerText = "Nessun cliente trovato."; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = '';
           }
         } catch (e) {
           btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
