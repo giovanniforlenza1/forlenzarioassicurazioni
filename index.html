@@ -3,347 +3,278 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forlenza Rio | Consulenza assicurativa</title>
+    <title>Forlenza Rio | CRM Gestionale</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
       :root {
-        --brand-color: #0b394f; 
-        --brand-light: #155573;
-        --accent-color: #95a5a6; 
-        --text-dark: #2c3e50;
-        --bg-light: #f4f6f7;
-        --success: #27ae60;
-        --danger: #c0392b;
-        --radius: 0px; 
+        --brand-color: #0b394f; --brand-light: #155573; --accent-color: #95a5a6; 
+        --text-dark: #2c3e50; --bg-light: #f4f6f7; --success: #27ae60; --danger: #c0392b; --radius: 0px; 
       }
-      
-      body { 
-        font-family: 'Montserrat', sans-serif; 
-        margin: 0; 
-        padding: 0; 
-        background-color: var(--bg-light); 
-        color: var(--text-dark); 
-      }
-      
-      .navbar {
-        background-color: var(--brand-color);
-        padding: 20px 5%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: white;
-        border-bottom: 4px solid var(--accent-color);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-      }
-      .logo-container {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-      }
-      .logo-text {
-        font-weight: 700;
-        font-size: 26px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-      }
-      .logo-subtext {
-        font-size: 12px;
-        font-style: italic;
-        color: #ecf0f1;
-        letter-spacing: 1px;
-        margin-top: 2px;
-      }
-      
-      button {
-        padding: 14px 30px;
-        border: none;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-size: 14px;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        font-family: 'Montserrat', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
+      body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; background-color: var(--bg-light); color: var(--text-dark); }
+      .navbar { background-color: var(--brand-color); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; color: white; border-bottom: 4px solid var(--accent-color); position: sticky; top: 0; z-index: 1000; }
+      .logo-text { font-weight: 700; font-size: 24px; letter-spacing: 2px; text-transform: uppercase; }
+      .logo-subtext { font-size: 11px; font-style: italic; color: #ecf0f1; letter-spacing: 1px; margin-top: 2px; }
+      button { padding: 14px 25px; border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s ease; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
       .btn-primary { background-color: white; color: var(--brand-color); }
       .btn-primary:hover { background-color: var(--accent-color); color: white; }
-      .btn-action {
-        background-color: var(--brand-color); color: white; width: 100%;
-        padding: 16px; font-size: 15px; margin-top: 15px;
-      }
+      .btn-action { background-color: var(--brand-color); color: white; width: 100%; padding: 16px; font-size: 15px; margin-top: 15px; }
       .btn-action:hover { background-color: var(--brand-light); }
-
-      .hero {
-        background: linear-gradient(135deg, rgba(11, 57, 79, 0.92) 0%, rgba(21, 85, 115, 0.92) 100%), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1920&q=80') center/cover;
-        color: white; text-align: center; padding: 120px 20px;
-      }
-      .hero h1 { font-size: 48px; margin-bottom: 25px; font-weight: 700; letter-spacing: -1px; }
-      .hero p { font-size: 18px; max-width: 750px; margin: 0 auto 40px auto; line-height: 1.8; color: #ecf0f1; }
-
-      .services-section { background: white; padding: 80px 20px; text-align: center; }
-      .section-title { color: var(--brand-color); font-size: 28px; margin-bottom: 60px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-      .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; }
-      .service-card { padding: 40px 20px; border: 1px solid #e0e0e0; background: var(--bg-light); transition: transform 0.3s; }
-      .service-card:hover { transform: translateY(-5px); border-color: var(--brand-color); }
-      .service-card i { font-size: 45px; color: var(--brand-color); margin-bottom: 20px; }
-      .service-card h3 { font-size: 20px; color: var(--brand-color); margin-bottom: 15px; text-transform: uppercase; }
-      .service-card p { font-size: 15px; color: #555; line-height: 1.6; }
-
-      .partners-section { background: var(--bg-light); padding: 70px 20px; text-align: center; border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; }
-      .partners-grid { display: flex; justify-content: center; align-items: center; gap: 100px; max-width: 900px; margin: 0 auto; }
-      .partner-logo-img { max-height: 80px; max-width: 250px; object-fit: contain; filter: grayscale(100%); opacity: 0.7; transition: all 0.3s ease; }
-      .partner-logo-img:hover { filter: grayscale(0%); opacity: 1; }
-
-      .digital-section { background: var(--brand-color); color: white; padding: 80px 20px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 50px; }
-      .digital-content { max-width: 600px; text-align: left; }
-      .digital-content h2 { font-size: 32px; margin-bottom: 20px; color: white; }
-      .digital-content p { font-size: 16px; line-height: 1.8; color: #bdc3c7; margin-bottom: 30px; }
-      .digital-features { list-style: none; padding: 0; }
-      .digital-features li { margin-bottom: 15px; font-size: 16px; }
-      .digital-features i { color: var(--accent-color); margin-right: 15px; font-size: 20px; }
-
-      .client-area-wrapper { display: none; padding: 80px 20px; min-height: 70vh; background: var(--bg-light); }
-      .login-box { background: white; max-width: 500px; margin: 0 auto; padding: 50px 40px; border-radius: var(--radius); border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; }
-      .login-icon { font-size: 45px; color: var(--brand-color); margin-bottom: 25px; }
-      .login-box h2 { color: var(--brand-color); margin-bottom: 15px; font-size: 26px; text-transform: uppercase; }
-      .login-box p { color: #7f8c8d; margin-bottom: 30px; line-height: 1.6; font-size: 15px; }
-      .input-group { position: relative; margin-bottom: 25px; }
+      
+      .login-box { background: white; max-width: 450px; margin: 100px auto; padding: 50px 40px; border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; }
+      .login-box h2 { color: var(--brand-color); margin-bottom: 15px; text-transform: uppercase; }
+      .input-group { position: relative; margin-bottom: 20px; }
       .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #95a5a6; }
-      input[type="text"] { width: 100%; padding: 16px 16px 16px 50px; border: 1px solid #bdc3c7; border-radius: var(--radius); box-sizing: border-box; font-size: 16px; font-family: 'Montserrat', sans-serif; background-color: #fcfcfc; }
-      input[type="text"]:focus { outline: none; border-color: var(--brand-color); background-color: white; }
+      .input-full { width: 100%; padding: 16px 16px 16px 50px; border: 1px solid #bdc3c7; box-sizing: border-box; font-size: 16px; font-family: 'Montserrat', sans-serif; }
+      .input-full:focus { outline: none; border-color: var(--brand-color); }
 
-      #dashboard-container { display: none; max-width: 1000px; margin: 0 auto; }
-      .dashboard-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; }
-      .dashboard-header h2 { color: var(--brand-color); margin: 0 0 5px 0; text-transform: uppercase; }
-      .btn-outline { background: transparent; border: 2px solid var(--brand-color); color: var(--brand-color); padding: 10px 20px; }
-      .btn-outline:hover { background: var(--brand-color); color: white; }
+      #crmDashboard { display: none; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+      .search-bar { display: flex; gap: 15px; flex-wrap: wrap; background: white; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid var(--brand-color); }
+      .search-bar input { flex: 1; min-width: 250px; padding: 15px; border: 1px solid #bdc3c7; font-size: 16px; font-family: 'Montserrat', sans-serif; }
+      
+      .anagrafica-card { background: white; padding: 30px; border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+      .anagrafica-info h3 { margin: 0 0 15px 0; color: var(--brand-color); font-size: 24px; text-transform: uppercase;}
+      .anagrafica-info p { margin: 8px 0; font-size: 15px; }
       
       .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-      .policy-card { background: white; border-radius: var(--radius); padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s; }
-      .policy-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; }
       .policy-icon { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #bdc3c7; }
-      .policy-type { font-size: 18px; font-weight: 700; color: var(--brand-color); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-      .policy-number { font-size: 14px; color: #7f8c8d; margin-bottom: 25px; font-family: monospace; font-size: 15px; }
-      .policy-date { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; padding-top: 15px; border-top: 1px dashed #ecf0f1; }
-      .status-badge { display: inline-block; padding: 6px 12px; border-radius: var(--radius); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 15px; letter-spacing: 1px; }
-      .status-active { background: #e8f8f5; color: var(--success); border: 1px solid var(--success); }
-      
-      .footer { background-color: #072635; color: rgba(255,255,255,0.8); padding: 60px 20px 30px 20px; }
-      .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; text-align: left; }
-      .footer-col h4 { color: white; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-size: 15px; }
-      .footer-col p { margin: 10px 0; font-size: 14px; line-height: 1.6; }
-      .footer-col i { width: 25px; color: var(--accent-color); }
-      .footer-bottom { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; opacity: 0.6; text-transform: uppercase; }
+      .policy-type { font-size: 18px; font-weight: 700; color: var(--brand-color); margin-bottom: 5px; text-transform: uppercase; }
+      .policy-date { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; padding-top: 15px; border-top: 1px dashed #ecf0f1; margin-top: 15px; }
+      .link-gestionale { display: block; text-align: center; padding: 12px; background: var(--brand-color); color: white; text-decoration: none; font-weight: 600; font-size: 13px; text-transform: uppercase; margin-top: 20px; transition: 0.2s;}
+      .link-gestionale:hover { background: var(--brand-light); }
 
-      @media (max-width: 768px) {
-        .navbar { flex-direction: column; gap: 15px; text-align: center; }
-        .hero { padding: 70px 20px; }
-        .hero h1 { font-size: 36px; }
-        .services-grid { grid-template-columns: 1fr; }
-        .partners-grid { flex-direction: column; gap: 40px; }
-        .partner-logo-img { max-width: 200px; }
-        .digital-section { padding: 50px 20px; text-align: center; }
-        .digital-content { text-align: center; }
-        .digital-features li { text-align: left; }
-        .dashboard-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-        .policies-grid { grid-template-columns: 1fr; }
-        .footer-grid { grid-template-columns: 1fr; text-align: center; }
-      }
+      .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; }
+      .modal-content { background: white; max-width: 600px; margin: 40px auto; padding: 40px; position: relative; border-top: 5px solid var(--brand-color); }
+      .modal-content h3 { color: var(--brand-color); text-transform: uppercase; margin-top: 0; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+      .form-input { width: 100%; padding: 12px; border: 1px solid #bdc3c7; font-family: 'Montserrat', sans-serif; box-sizing: border-box; }
+      
+      @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .anagrafica-card { flex-direction: column; align-items: flex-start; } }
     </style>
   </head>
   <body>
     <div class="navbar">
-      <div class="logo-container" onclick="mostraHome()">
+      <div class="logo-container">
         <div class="logo-text">Forlenza Rio</div>
-        <div class="logo-subtext">Consulenza assicurativa</div>
+        <div class="logo-subtext">CRM Gestionale Interno</div>
       </div>
-      <button class="btn-primary" onclick="mostraAreaCliente()"><i class="fas fa-lock"></i> Area clienti</button>
-    </div>
-    
-    <div id="vistaHome">
-      <div class="hero">
-        <h1>Protezione assoluta.</h1>
-        <p>Da oltre 40 anni affianchiamo professionisti, aziende e famiglie con soluzioni assicurative solide, personalizzate e trasparenti.</p>
-        <button class="btn-primary" style="font-size: 16px; padding: 20px 40px;" onclick="mostraAreaCliente()">
-          <i class="fas fa-search"></i> Consulta le tue polizze
-        </button>
-      </div>
-
-      <div class="services-section">
-        <h2 class="section-title">Le nostre competenze</h2>
-        <div class="services-grid">
-          <div class="service-card"><i class="fas fa-car-side"></i><h3>Mobilità</h3><p>Coperture RC Auto, furto, incendio e kasko strutturate per garantire la massima tutela del tuo veicolo in ogni situazione.</p></div>
-          <div class="service-card"><i class="fas fa-home"></i><h3>Patrimonio</h3><p>Assicurazioni complete per abitazioni e fabbricati commerciali contro danni strutturali, calamità e responsabilità civile.</p></div>
-          <div class="service-card"><i class="fas fa-industry"></i><h3>Impresa</h3><p>Tutela per le attività commerciali e industriali: responsabilità civile terzi, cyber risk e protezione del reddito aziendale.</p></div>
-          <div class="service-card"><i class="fas fa-heartbeat"></i><h3>Persona</h3><p>Piani sanitari, polizze infortuni e soluzioni vita per garantire stabilità economica a te e ai tuoi cari in ogni evenienza.</p></div>
-        </div>
-      </div>
-
-      <div class="partners-section">
-        <h2 class="section-title" style="font-size: 22px; color: #7f8c8d;">Agenzia plurimandataria</h2>
-        <div class="partners-grid">
-          <img src="bene.png" alt="Bene Assicurazioni" class="partner-logo-img">
-          <img src="reale.png" alt="Reale Mutua" class="partner-logo-img">
-        </div>
-      </div>
-
-      <div class="digital-section">
-        <div class="digital-content">
-          <h2>Il tuo archivio assicurativo digitale</h2>
-          <p>Abbiamo sviluppato un sistema informatico proprietario per permetterti di avere sempre il controllo delle tue coperture. Accedendo all'area clienti potrai interagire con il database dell'agenzia in tempo reale.</p>
-          <ul class="digital-features">
-            <li><i class="fas fa-check-square"></i> Verifica immediata dello stato di tutte le coperture in essere.</li>
-            <li><i class="fas fa-check-square"></i> Controllo incrociato delle date di scadenza.</li>
-            <li><i class="fas fa-check-square"></i> Nessuna password da ricordare, accesso tramite mail anagrafica.</li>
-            <li><i class="fas fa-check-square"></i> Connessione diretta con i sistemi gestionali delle sedi operative.</li>
-          </ul>
-          <button class="btn-primary" style="margin-top: 20px;" onclick="mostraAreaCliente()">Accedi ora</button>
-        </div>
-      </div>
+      <button class="btn-primary" onclick="location.reload()" style="padding: 10px 15px;"><i class="fas fa-sign-out-alt"></i> Disconnetti</button>
     </div>
 
-    <div id="areaCliente" class="client-area-wrapper">
-      <div class="login-box" id="box-login">
-        <i class="fas fa-server login-icon"></i>
-        <h2>Connessione database</h2>
-        <p>Inserisci l'indirizzo email o il numero di telefono comunicato in agenzia per avviare l'estrazione dei dati contrattuali.</p>
+    <!-- Schermata Login -->
+    <div id="loginSection">
+      <div class="login-box">
+        <i class="fas fa-shield-alt" style="font-size: 45px; color: var(--brand-color); margin-bottom: 25px;"></i>
+        <h2>Accesso Sicuro</h2>
         <div class="input-group">
-          <i class="fas fa-user"></i>
-          <input type="text" id="emailInput" placeholder="Email o telefono registrato">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="adminPassword" class="input-full" placeholder="Password operativa">
         </div>
-        <button class="btn-action" onclick="cerca()"><i class="fas fa-database"></i> Avvia ricerca</button>
-        <button class="btn-primary" style="width: 100%; margin-top: 15px; border: 1px solid #bdc3c7;" onclick="mostraHome()">Annulla operazione</button>
-        <div id="messaggio-errore" style="margin-top: 20px; color: var(--danger); display: none; font-weight: 600; font-size: 14px;"></div>
-      </div>
-
-      <div id="dashboard-container">
-        <div class="dashboard-header">
-          <div>
-            <h2><i class="fas fa-file-contract"></i> Estratto conto polizze</h2>
-            <p style="color: #7f8c8d; margin: 8px 0 0 0; font-size: 14px;">Dati sincronizzati con il gestionale Forlenza Rio.</p>
-          </div>
-          <button class="btn-outline" onclick="resetRicerca()"><i class="fas fa-times"></i> Termina sessione</button>
-        </div>
-        <div class="policies-grid" id="risultati"></div>
+        <button class="btn-action" onclick="login()"><i class="fas fa-sign-in-alt"></i> Autenticazione</button>
       </div>
     </div>
-    
-    <div class="footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Sede centrale</h4>
-          <p><i class="fas fa-map-marker-alt"></i> Contursi Terme (SA)</p>
-          <p><i class="fas fa-phone"></i> 0828 791266</p>
-        </div>
-        <div class="footer-col">
-          <h4>Sede secondaria</h4>
-          <p><i class="fas fa-map-marker-alt"></i> Oliveto Citra (SA)</p>
-          <p><i class="fas fa-phone"></i> 0828 798312</p>
-        </div>
-        <div class="footer-col">
-          <h4>Amministrazione centrale</h4>
-          <p><i class="fas fa-envelope"></i> forlenzarioassicurazioni@gmail.com</p>
-          <p><i class="fas fa-clock"></i> Lun - Ven: 09:00 - 13:00 / 15:30 - 19:00</p>
-        </div>
+
+    <!-- Pannello Operativo -->
+    <div id="crmDashboard">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Cerca Nome, C.F., Telefono, Email, Targa o Polizza...">
+        <button class="btn-action" style="margin: 0; width: auto;" onclick="cercaGlobale()" id="btnCerca"><i class="fas fa-search"></i> Avvia Ricerca</button>
+        <button class="btn-primary" style="margin: 0; border: 1px solid var(--brand-color);" onclick="apriModalPolizza()"><i class="fas fa-plus"></i> Nuova Polizza</button>
       </div>
-      <div class="footer-bottom">
-        &copy; 2026 Forlenza Rio consulenza assicurativa.
+      
+      <div id="messaggio-errore" style="color: var(--danger); font-weight: 600; margin-bottom: 20px; display: none;"></div>
+      <div id="crmRisultati"></div>
+    </div>
+
+    <!-- Modal Inserimento Contatti -->
+    <div id="modalContatti" class="modal-overlay">
+      <div class="modal-content">
+        <h3><i class="fas fa-address-book"></i> Integra Recapiti Cliente</h3>
+        <p style="margin-bottom:20px; font-size:14px; color:#555;">Inserisci i dati mancanti. Verranno salvati su tutte le polizze associate al Codice Fiscale.</p>
+        <input type="text" id="addTel" class="form-input" placeholder="Nuovo Numero di Telefono" style="margin-bottom:15px;">
+        <input type="email" id="addEmail" class="form-input" placeholder="Nuovo Indirizzo Email" style="margin-bottom:25px;">
+        <button class="btn-action" style="margin-top:0;" onclick="salvaContatti()" id="btnSalvaContatti">Salva nel Database</button>
+        <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalContatti')">Annulla</button>
+      </div>
+    </div>
+
+    <!-- Modal Nuova Polizza -->
+    <div id="modalPolizza" class="modal-overlay">
+      <div class="modal-content">
+        <h3><i class="fas fa-file-contract"></i> Registra Nuova Polizza</h3>
+        <div class="form-grid">
+          <input type="text" id="npCompagnia" class="form-input" placeholder="Compagnia (Es. BENE ASSICURAZIONI)">
+          <input type="text" id="npContraente" class="form-input" placeholder="Contraente (Nome e Cognome)">
+          <input type="text" id="npRamo" class="form-input" placeholder="Ramo (Es. AUTO, CASA)">
+          <input type="text" id="npPolizza" class="form-input" placeholder="Numero di Polizza">
+          <input type="text" id="npData" class="form-input" placeholder="Data Scadenza (GG/MM/AAAA)">
+          <input type="text" id="npPremio" class="form-input" placeholder="Premio (€)">
+          <input type="text" id="npFrazionamento" class="form-input" placeholder="Frazionamento (Es. ANNUALE)">
+          <input type="text" id="npCF" class="form-input" placeholder="Codice Fiscale">
+          <input type="text" id="npTarga" class="form-input" placeholder="Targa (se prevista)">
+          <input type="text" id="npComune" class="form-input" placeholder="Comune di Residenza">
+          <input type="text" id="npTel" class="form-input" placeholder="Telefono (Opzionale)">
+          <input type="text" id="npEmail" class="form-input" placeholder="Email (Opzionale)">
+        </div>
+        <button class="btn-action" style="margin-top:0;" onclick="salvaNuovaPolizza()" id="btnSalvaPolizza">Archivia Polizza</button>
+        <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalPolizza')">Annulla</button>
       </div>
     </div>
 
     <script>
-      function mostraAreaCliente() {
-        document.getElementById('vistaHome').style.display = 'none';
-        document.getElementById('areaCliente').style.display = 'block';
-        resetRicerca(); 
-        window.scrollTo(0,0);
-      }
+      const TOKEN = "SEGRETO_FORLENZA_2026";
+      const URL_API = "https://script.google.com/macros/s/AKfycbxwCGf7req_02xigi9qO70LEKqnAMjkvUR68UoPsYcuUCQHaQVEzdEUF0tex1rg8FeS5g/exec";
+      var currentCF = "";
 
-      function mostraHome() {
-        document.getElementById('areaCliente').style.display = 'none';
-        document.getElementById('vistaHome').style.display = 'block';
-        window.scrollTo(0,0);
-      }
-
-      function resetRicerca() {
-        document.getElementById('box-login').style.display = 'block';
-        document.getElementById('dashboard-container').style.display = 'none';
-        document.getElementById('emailInput').value = '';
-        document.getElementById('messaggio-errore').style.display = 'none';
-      }
-
-      function mostraErrore(testo) {
-        var divErrore = document.getElementById('messaggio-errore');
-        divErrore.innerHTML = '<i class="fas fa-exclamation-triangle"></i> ' + testo;
-        divErrore.style.display = 'block';
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-database"></i> Avvia ricerca';
-        btn.disabled = false;
-      }
-
-      async function cerca() {
-        var contatto = document.getElementById('emailInput').value;
-        if (!contatto) return mostraErrore('ERRORE: compilare il campo con email o telefono.');
-        
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Elaborazione in corso...';
-        btn.disabled = true;
-        
-        var urlApi = "https://script.google.com/macros/s/AKfycbwh2xsWFnTRM_uD69wO1Eh3YA5y0Z1mIw48Ky-VUdZ61KhCe2D5fIXCWHw5SbhVs91H/exec";
-        
-        try {
-          var response = await fetch(urlApi + "?contatto=" + encodeURIComponent(contatto), { redirect: 'follow' });
-          var dati = await response.json();
-          
-          if (dati.errore) return mostraErrore(dati.errore);
-          if (dati.length === 0) return mostraErrore('anagrafica non rilevata nel sistema.');
-          
-          mostraRisultati(dati);
-        } catch (error) {
-          mostraErrore('errore di connessione al database centrale.');
+      // 1. Gestione Accesso Sicuro
+      function login() {
+        if (document.getElementById('adminPassword').value === "Forlenza2026") {
+          document.getElementById('loginSection').style.display = 'none';
+          document.getElementById('crmDashboard').style.display = 'block';
+        } else {
+          alert("Password di sicurezza errata.");
         }
       }
 
-      function getIconaPerTipo(tipo) {
-        var t = tipo.toLowerCase();
-        if(t.indexOf('auto') > -1 || t.indexOf('veicoli') > -1 || t.indexOf('moto') > -1) return 'fa-car';
-        if(t.indexOf('casa') > -1 || t.indexOf('fabbricato') > -1) return 'fa-home';
-        if(t.indexOf('vita') > -1 || t.indexOf('salute') > -1) return 'fa-heartbeat';
-        if(t.indexOf('infortuni') > -1) return 'fa-crutch';
-        if(t.indexOf('azienda') > -1 || t.indexOf('impresa') > -1) return 'fa-industry';
-        return 'fa-file-invoice';
+      // 2. Ricerca Globale Database
+      async function cercaGlobale() {
+        var query = document.getElementById('searchInput').value;
+        var btn = document.getElementById('btnCerca');
+        var errDiv = document.getElementById('messaggio-errore');
+        
+        if (!query) { errDiv.innerText = "Inserisci un parametro di ricerca."; errDiv.style.display = 'block'; return; }
+        
+        errDiv.style.display = 'none';
+        btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Ricerca...';
+        
+        try {
+          var res = await fetch(URL_API + "?token=" + TOKEN + "&q=" + encodeURIComponent(query));
+          var dati = await res.json();
+          btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
+          
+          if (dati.errore) { errDiv.innerText = dati.errore; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = ''; return; }
+          mostraCruscotto(dati);
+        } catch (e) {
+          btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
+          errDiv.innerText = "Errore di connessione al database."; errDiv.style.display = 'block';
+        }
       }
 
-      function mostraRisultati(polizze) {
-        var btn = document.querySelector('.btn-action');
-        btn.innerHTML = '<i class="fas fa-database"></i> Avvia ricerca';
-        btn.disabled = false;
-
-        document.getElementById('box-login').style.display = 'none';
-        document.getElementById('dashboard-container').style.display = 'block';
-        document.getElementById('messaggio-errore').style.display = 'none';
-
-        var div = document.getElementById('risultati');
+      // 3. Renderizzazione Scheda e Polizze
+      function mostraCruscotto(dati) {
+        currentCF = dati.anagrafica.codFiscale;
         var html = '';
         
-        for (var i = 0; i < polizze.length; i++) {
-          var icona = getIconaPerTipo(polizze[i].tipo);
+        // Sezione Anagrafica Unificata
+        var tel = dati.anagrafica.telefono ? dati.anagrafica.telefono : '<span style="color:var(--danger)">Mancante</span>';
+        var em = dati.anagrafica.email ? dati.anagrafica.email : '<span style="color:var(--danger)">Mancante</span>';
+        
+        html += '<div class="anagrafica-card"><div class="anagrafica-info">';
+        html += '<h3><i class="fas fa-user-tie"></i> ' + (dati.anagrafica.nome || 'Dato non rilevato') + '</h3>';
+        html += '<p><strong><i class="fas fa-id-card"></i> C.Fiscale:</strong> ' + (dati.anagrafica.codFiscale || 'N/D') + ' &nbsp;|&nbsp; <strong><i class="fas fa-map-marker-alt"></i> Comune:</strong> ' + (dati.anagrafica.comune || 'N/D') + '</p>';
+        html += '<p><strong><i class="fas fa-phone"></i> Telefono:</strong> ' + tel + ' &nbsp;|&nbsp; <strong><i class="fas fa-envelope"></i> Email:</strong> ' + em + '</p>';
+        html += '</div><div>';
+        
+        if (!dati.anagrafica.telefono || !dati.anagrafica.email) {
+          html += '<button class="btn-primary" style="border: 2px solid var(--brand-color);" onclick="apriModalContatti()"><i class="fas fa-user-edit"></i> Integra Recapiti</button>';
+        }
+        html += '</div></div>';
+        
+        // Griglia Polizze Attive
+        html += '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-folder-open"></i> Portafoglio Polizze</h2>';
+        html += '<div class="policies-grid">';
+        
+        for (var i = 0; i < dati.polizze.length; i++) {
+          var p = dati.polizze[i];
+          var icona = getIconaPerTipo(p.ramo);
+          var gestLink = (p.compagnia.toUpperCase().indexOf('BENE') > -1) ? 'https://www.bene.it' : 'https://www.realemutua.it';
           
           html += '<div class="policy-card">';
           html += '<i class="fas ' + icona + ' policy-icon"></i>';
-          html += '<div class="policy-type">' + polizze[i].tipo + '</div>';
-          html += '<div class="policy-number">Rif: ' + polizze[i].numero + '</div>';
-          html += '<div class="policy-date"><i class="far fa-calendar-alt" style="color: var(--brand-color);"></i>Scadenza: <span style="color: var(--danger);">' + polizze[i].scadenza + '</span></div>';
-          html += '<div class="status-badge status-active">Operativa</div>';
+          html += '<div class="policy-type">' + p.compagnia + '</div>';
+          html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">Ramo: ' + p.ramo + ' &nbsp;|&nbsp; Frazionamento: ' + p.frazionamento + '</div>';
+          html += '<div style="font-family:monospace; font-size:15px; margin-bottom:10px; color:#555;">Polizza: ' + p.numero + '</div>';
+          if(p.targa) { html += '<div style="font-size:14px; font-weight:600; margin-bottom:15px;"><i class="fas fa-car"></i> Targa: ' + p.targa + '</div>'; }
+          
+          html += '<div class="policy-date"><i class="far fa-calendar-check" style="color:var(--brand-color);"></i> Scadenza Copertura: <span style="font-weight:700;">' + p.scadenza + '</span></div>';
+          html += '<div class="policy-date" style="border-top:none; padding-top:5px;"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Tolleranza Legale (+15gg): <span style="color:#e67e22; font-weight:700;">' + p.scadenzaTolleranza + '</span></div>';
+          html += '<a href="' + gestLink + '" target="_blank" class="link-gestionale"><i class="fas fa-external-link-square-alt"></i> Apri Portale Compagnia</a>';
           html += '</div>';
         }
-        div.innerHTML = html;
+        html += '</div>';
+        document.getElementById('crmRisultati').innerHTML = html;
       }
+
+      // 4. Funzioni Scrittura Database
+      async function salvaContatti() {
+        var btn = document.getElementById('btnSalvaContatti');
+        btn.innerText = "Salvataggio in corso...";
+        
+        var payload = {
+          token: TOKEN,
+          azione: "aggiornaContatto",
+          codFiscale: currentCF,
+          telefono: document.getElementById('addTel').value,
+          email: document.getElementById('addEmail').value
+        };
+        
+        try {
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) { alert(esito.message); chiudiModal('modalContatti'); cercaGlobale(); } 
+          else { alert(esito.errore); }
+        } catch(e) { alert("Errore di sincronizzazione"); }
+        btn.innerText = "Salva nel Database";
+      }
+
+      async function salvaNuovaPolizza() {
+        var btn = document.getElementById('btnSalvaPolizza');
+        btn.innerText = "Registrazione in corso...";
+        
+        var payload = {
+          token: TOKEN, azione: "aggiungiPolizza",
+          compagnia: document.getElementById('npCompagnia').value,
+          contraente: document.getElementById('npContraente').value,
+          ramo: document.getElementById('npRamo').value,
+          polizza: document.getElementById('npPolizza').value,
+          dataEffetto: document.getElementById('npData').value,
+          premio: document.getElementById('npPremio').value,
+          frazionamento: document.getElementById('npFrazionamento').value,
+          codFiscale: document.getElementById('npCF').value,
+          targa: document.getElementById('npTarga').value,
+          comune: document.getElementById('npComune').value,
+          telefono: document.getElementById('npTel').value,
+          email: document.getElementById('npEmail').value
+        };
+        
+        if (!payload.compagnia || !payload.contraente || !payload.polizza) { alert("Compilare almeno Compagnia, Contraente e Polizza."); btn.innerText = "Archivia Polizza"; return; }
+        
+        try {
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) { 
+            alert(esito.message); chiudiModal('modalPolizza'); 
+            document.getElementById('searchInput').value = payload.codFiscale; cercaGlobale(); 
+          } else { alert(esito.errore); }
+        } catch(e) { alert("Errore di registrazione"); }
+        btn.innerText = "Archivia Polizza";
+      }
+
+      // Utility Gestione Interfaccia
+      function getIconaPerTipo(tipo) {
+        var t = tipo.toLowerCase();
+        if(t.indexOf('auto') > -1 || t.indexOf('moto') > -1) return 'fa-car';
+        if(t.indexOf('casa') > -1) return 'fa-home';
+        if(t.indexOf('vita') > -1 || t.indexOf('salute') > -1) return 'fa-heartbeat';
+        if(t.indexOf('infortuni') > -1) return 'fa-crutch';
+        if(t.indexOf('azienda') > -1) return 'fa-industry';
+        return 'fa-file-invoice';
+      }
+      function apriModalContatti() { document.getElementById('modalContatti').style.display = 'block'; }
+      function apriModalPolizza() { document.getElementById('modalPolizza').style.display = 'block'; }
+      function chiudiModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
   </body>
 </html>
