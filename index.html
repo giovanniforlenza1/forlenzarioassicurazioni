@@ -38,7 +38,8 @@
       .anagrafica-info p { margin: 8px 0; font-size: 15px; }
       
       .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; }
+      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s;}
+      .policy-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
       .policy-icon { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #bdc3c7; }
       .policy-type { font-size: 18px; font-weight: 700; color: var(--brand-color); margin-bottom: 5px; text-transform: uppercase; }
       .policy-date { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; padding-top: 15px; border-top: 1px dashed #ecf0f1; margin-top: 15px; }
@@ -125,7 +126,8 @@
 
     <script>
       const TOKEN = "SEGRETO_FORLENZA_2026";
-      const URL_API = "https://script.google.com/macros/s/AKfycbxwCGf7req_02xigi9qO70LEKqnAMjkvUR68UoPsYcuUCQHaQVEzdEUF0tex1rg8FeS5g/exec";
+      const URL_API = "https://script.google.com/macros/library/d/1COQtivaUdsBWSFRg6yuRFbtZ8igf4KGkRoPZ8frMhlD2Iy3fXAb2xi_Y/1";
+      var profiliTrovati = [];
       var currentCF = "";
 
       // 1. Gestione Accesso Sicuro
@@ -155,17 +157,50 @@
           btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
           
           if (dati.errore) { errDiv.innerText = dati.errore; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = ''; return; }
-          mostraCruscotto(dati);
+          
+          profiliTrovati = dati;
+          
+          if (profiliTrovati.length === 1) {
+             mostraDettaglioProfilo(0, false);
+          } else {
+             mostraListaProfili();
+          }
         } catch (e) {
           btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
           errDiv.innerText = "Errore di connessione al database."; errDiv.style.display = 'block';
         }
       }
 
-      // 3. Renderizzazione Scheda e Polizze
-      function mostraCruscotto(dati) {
+      // 3. Mostra Lista di Clienti (se ce n'è più di uno)
+      function mostraListaProfili() {
+        var html = '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-users"></i> Clienti Trovati (' + profiliTrovati.length + ')</h2>';
+        html += '<div class="policies-grid">';
+        
+        for (var i = 0; i < profiliTrovati.length; i++) {
+            var ana = profiliTrovati[i].anagrafica;
+            var numPolizze = profiliTrovati[i].polizze.length;
+            html += '<div class="policy-card" style="cursor:pointer;" onclick="mostraDettaglioProfilo(' + i + ', true)">';
+            html += '<i class="fas fa-user-circle policy-icon"></i>';
+            html += '<div class="policy-type">' + (ana.nome || 'Sconosciuto') + '</div>';
+            html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">C.F.: ' + (ana.codFiscale || 'N/D') + '</div>';
+            html += '<div style="font-size:14px; margin-bottom:15px;"><i class="fas fa-map-marker-alt"></i> ' + (ana.comune || 'N/D') + '</div>';
+            html += '<div class="policy-date"><i class="fas fa-file-contract" style="color:var(--brand-color);"></i> Polizze collegate: <span style="font-weight:700;">' + numPolizze + '</span></div>';
+            html += '<div class="link-gestionale">Apri Scheda Cliente</div>';
+            html += '</div>';
+        }
+        html += '</div>';
+        document.getElementById('crmRisultati').innerHTML = html;
+      }
+
+      // 4. Mostra Dettaglio Cliente Specifico
+      function mostraDettaglioProfilo(index, fromList) {
+        var dati = profiliTrovati[index];
         currentCF = dati.anagrafica.codFiscale;
         var html = '';
+        
+        if (fromList) {
+            html += '<button class="btn-primary" style="margin-bottom: 20px; border: 1px solid var(--brand-color); padding: 8px 15px;" onclick="mostraListaProfili()"><i class="fas fa-arrow-left"></i> Torna alla lista</button>';
+        }
         
         // Sezione Anagrafica Unificata
         var tel = dati.anagrafica.telefono ? dati.anagrafica.telefono : '<span style="color:var(--danger)">Mancante</span>';
@@ -207,7 +242,7 @@
         document.getElementById('crmRisultati').innerHTML = html;
       }
 
-      // 4. Funzioni Scrittura Database
+      // 5. Funzioni Scrittura Database
       async function salvaContatti() {
         var btn = document.getElementById('btnSalvaContatti');
         btn.innerText = "Salvataggio in corso...";
