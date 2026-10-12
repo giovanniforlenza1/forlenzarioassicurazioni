@@ -61,7 +61,7 @@
         <div class="logo-text">Forlenza Rio</div>
         <div class="logo-subtext">CRM Gestionale Interno</div>
       </div>
-      <button class="btn-primary" onclick="location.reload()" style="padding: 10px 15px;"><i class="fas fa-sign-out-alt"></i> Disconnetti</button>
+      <button class="btn-primary" onclick="logout()" style="padding: 10px 15px;"><i class="fas fa-sign-out-alt"></i> Disconnetti</button>
     </div>
 
     <!-- Schermata Login -->
@@ -130,14 +130,40 @@
       var profiliTrovati = [];
       var currentCF = "";
 
-      // 1. Gestione Accesso Sicuro
+      // 0. Controllo automatico dell'accesso salvato all'avvio
+      window.onload = function() {
+        var savedLogin = localStorage.getItem('forlenzaCrmAuth');
+        var loginTime = localStorage.getItem('forlenzaCrmTime');
+        
+        if (savedLogin === 'true' && loginTime) {
+          var now = new Date().getTime();
+          var ore24 = 24 * 60 * 60 * 1000;
+          
+          if (now - parseInt(loginTime) < ore24) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('crmDashboard').style.display = 'block';
+          } else {
+            logout(); // Se sono passate 24h, resetta e costringe al login
+          }
+        }
+      };
+
+      // 1. Gestione Accesso Sicuro (con salvataggio)
       function login() {
         if (document.getElementById('adminPassword').value === "Forlenza2026") {
+          localStorage.setItem('forlenzaCrmAuth', 'true');
+          localStorage.setItem('forlenzaCrmTime', new Date().getTime().toString());
           document.getElementById('loginSection').style.display = 'none';
           document.getElementById('crmDashboard').style.display = 'block';
         } else {
           alert("Password di sicurezza errata.");
         }
+      }
+
+      function logout() {
+        localStorage.removeItem('forlenzaCrmAuth');
+        localStorage.removeItem('forlenzaCrmTime');
+        location.reload();
       }
 
       // 2. Ricerca Globale Database
