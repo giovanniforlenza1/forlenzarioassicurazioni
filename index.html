@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forlenza Rio | CRM Gestionale</title>
-    
-    <!-- Stringa aggiornata per forzare il caricamento della Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
+    <link rel="icon" type="image/png" href="favicon.png?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -42,7 +39,7 @@
       .anagrafica-info p { margin: 8px 0; font-size: 15px; }
       
       .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s;}
+      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s; display: flex; flex-direction: column;}
       .policy-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
       .policy-icon { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #bdc3c7; }
       .policy-type { font-size: 18px; font-weight: 700; color: var(--brand-color); margin-bottom: 5px; text-transform: uppercase; }
@@ -128,11 +125,36 @@
       </div>
     </div>
 
+    <!-- Modal Modifica Polizza -->
+    <div id="modalModifica" class="modal-overlay">
+      <div class="modal-content">
+        <h3><i class="fas fa-edit"></i> Modifica Dati Polizza</h3>
+        <div class="form-grid">
+          <input type="text" id="mpCompagnia" class="form-input" placeholder="Compagnia">
+          <input type="text" id="mpContraente" class="form-input" placeholder="Contraente">
+          <input type="text" id="mpRamo" class="form-input" placeholder="Ramo">
+          <input type="text" id="mpPolizza" class="form-input" placeholder="Numero di Polizza">
+          <input type="text" id="mpData" class="form-input" placeholder="Data Scadenza (GG/MM/AAAA)">
+          <input type="text" id="mpPremio" class="form-input" placeholder="Premio (€)">
+          <input type="text" id="mpFrazionamento" class="form-input" placeholder="Frazionamento">
+          <input type="text" id="mpCF" class="form-input" placeholder="Codice Fiscale">
+          <input type="text" id="mpTarga" class="form-input" placeholder="Targa">
+          <input type="text" id="mpComune" class="form-input" placeholder="Comune di Residenza">
+          <input type="text" id="mpTel" class="form-input" placeholder="Telefono">
+          <input type="text" id="mpEmail" class="form-input" placeholder="Email">
+        </div>
+        <button class="btn-action" style="margin-top:0;" onclick="salvaModificaPolizza()" id="btnSalvaModifica">Salva Modifiche</button>
+        <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalModifica')">Annulla</button>
+      </div>
+    </div>
+
     <script>
       const TOKEN = "SEGRETO_FORLENZA_2026";
       const URL_API = "https://script.google.com/macros/s/AKfycbxwCGf7req_02xigi9qO70LEKqnAMjkvUR68UoPsYcuUCQHaQVEzdEUF0tex1rg8FeS5g/exec";
+      
       var profiliTrovati = [];
       var currentCF = "";
+      var currentPolizzaOriginale = "";
 
       // 0. Controllo automatico dell'accesso salvato all'avvio
       window.onload = function() {
@@ -147,12 +169,12 @@
             document.getElementById('loginSection').style.display = 'none';
             document.getElementById('crmDashboard').style.display = 'block';
           } else {
-            logout(); // Se sono passate 24h, resetta e costringe al login
+            logout();
           }
         }
       };
 
-      // 1. Gestione Accesso Sicuro (con salvataggio)
+      // 1. Gestione Accesso Sicuro
       function login() {
         if (document.getElementById('adminPassword').value === "Forlenza2026") {
           localStorage.setItem('forlenzaCrmAuth', 'true');
@@ -203,7 +225,7 @@
         }
       }
 
-      // 3. Mostra Lista di Clienti (se ce n'è più di uno)
+      // 3. Mostra Lista di Clienti
       function mostraListaProfili() {
         var html = '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-users"></i> Clienti Trovati (' + profiliTrovati.length + ')</h2>';
         html += '<div class="policies-grid">';
@@ -234,7 +256,7 @@
             html += '<button class="btn-primary" style="margin-bottom: 20px; border: 1px solid var(--brand-color); padding: 8px 15px;" onclick="mostraListaProfili()"><i class="fas fa-arrow-left"></i> Torna alla lista</button>';
         }
         
-        // Sezione Anagrafica Unificata
+        // Sezione Anagrafica
         var tel = dati.anagrafica.telefono ? dati.anagrafica.telefono : '<span style="color:var(--danger)">Mancante</span>';
         var em = dati.anagrafica.email ? dati.anagrafica.email : '<span style="color:var(--danger)">Mancante</span>';
         
@@ -260,38 +282,35 @@
           
           html += '<div class="policy-card">';
           html += '<i class="fas ' + icona + ' policy-icon"></i>';
+          html += '<div style="flex-grow: 1;">';
           html += '<div class="policy-type">' + p.compagnia + '</div>';
-          html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">Ramo: ' + p.ramo + ' &nbsp;|&nbsp; Frazionamento: ' + p.frazionamento + '</div>';
+          html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">Ramo: ' + p.ramo + ' &nbsp;|&nbsp; Fraz.: ' + p.frazionamento + '</div>';
           html += '<div style="font-family:monospace; font-size:15px; margin-bottom:10px; color:#555;">Polizza: ' + p.numero + '</div>';
           if(p.targa) { html += '<div style="font-size:14px; font-weight:600; margin-bottom:15px;"><i class="fas fa-car"></i> Targa: ' + p.targa + '</div>'; }
-          
           html += '<div class="policy-date"><i class="far fa-calendar-check" style="color:var(--brand-color);"></i> Scadenza Copertura: <span style="font-weight:700;">' + p.scadenza + '</span></div>';
-          html += '<div class="policy-date" style="border-top:none; padding-top:5px;"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Tolleranza Legale (+15gg): <span style="color:#e67e22; font-weight:700;">' + p.scadenzaTolleranza + '</span></div>';
+          html += '<div class="policy-date" style="border-top:none; padding-top:5px;"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Tolleranza (+15gg): <span style="color:#e67e22; font-weight:700;">' + p.scadenzaTolleranza + '</span></div>';
+          html += '</div>';
+          
           html += '<a href="' + gestLink + '" target="_blank" class="link-gestionale"><i class="fas fa-external-link-square-alt"></i> Apri Portale Compagnia</a>';
+          
+          // NUOVI BOTTONI MODIFICA ed ELIMINA
+          html += '<div style="display:flex; gap:10px; margin-top:15px;">';
+          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--brand-color); padding: 10px;" onclick="apriModalModifica(' + index + ', ' + i + ')"><i class="fas fa-edit"></i> Modifica</button>';
+          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--danger); color: var(--danger); padding: 10px;" onclick="eliminaPolizza(\'' + p.numero + '\')"><i class="fas fa-trash-alt"></i> Elimina</button>';
+          html += '</div>';
           html += '</div>';
         }
         html += '</div>';
         document.getElementById('crmRisultati').innerHTML = html;
       }
 
-      // 5. Funzioni Scrittura Database
+      // 5. Funzioni Scrittura e Modifica Database
       async function salvaContatti() {
         var btn = document.getElementById('btnSalvaContatti');
         btn.innerText = "Salvataggio in corso...";
-        
-        var payload = {
-          token: TOKEN,
-          azione: "aggiornaContatto",
-          codFiscale: currentCF,
-          telefono: document.getElementById('addTel').value,
-          email: document.getElementById('addEmail').value
-        };
-        
-        try {
-          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
-          var esito = await res.json();
-          if (esito.success) { alert(esito.message); chiudiModal('modalContatti'); cercaGlobale(); } 
-          else { alert(esito.errore); }
+        var payload = { token: TOKEN, azione: "aggiornaContatto", codFiscale: currentCF, telefono: document.getElementById('addTel').value, email: document.getElementById('addEmail').value };
+        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
+          if (esito.success) { alert(esito.message); chiudiModal('modalContatti'); cercaGlobale(); } else { alert(esito.errore); }
         } catch(e) { alert("Errore di sincronizzazione"); }
         btn.innerText = "Salva nel Database";
       }
@@ -299,34 +318,48 @@
       async function salvaNuovaPolizza() {
         var btn = document.getElementById('btnSalvaPolizza');
         btn.innerText = "Registrazione in corso...";
-        
         var payload = {
           token: TOKEN, azione: "aggiungiPolizza",
-          compagnia: document.getElementById('npCompagnia').value,
-          contraente: document.getElementById('npContraente').value,
-          ramo: document.getElementById('npRamo').value,
-          polizza: document.getElementById('npPolizza').value,
-          dataEffetto: document.getElementById('npData').value,
-          premio: document.getElementById('npPremio').value,
-          frazionamento: document.getElementById('npFrazionamento').value,
-          codFiscale: document.getElementById('npCF').value,
-          targa: document.getElementById('npTarga').value,
-          comune: document.getElementById('npComune').value,
-          telefono: document.getElementById('npTel').value,
-          email: document.getElementById('npEmail').value
+          compagnia: document.getElementById('npCompagnia').value, contraente: document.getElementById('npContraente').value,
+          ramo: document.getElementById('npRamo').value, polizza: document.getElementById('npPolizza').value,
+          dataEffetto: document.getElementById('npData').value, premio: document.getElementById('npPremio').value,
+          frazionamento: document.getElementById('npFrazionamento').value, codFiscale: document.getElementById('npCF').value,
+          targa: document.getElementById('npTarga').value, comune: document.getElementById('npComune').value,
+          telefono: document.getElementById('npTel').value, email: document.getElementById('npEmail').value
         };
-        
         if (!payload.compagnia || !payload.contraente || !payload.polizza) { alert("Compilare almeno Compagnia, Contraente e Polizza."); btn.innerText = "Archivia Polizza"; return; }
-        
-        try {
-          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
-          var esito = await res.json();
-          if (esito.success) { 
-            alert(esito.message); chiudiModal('modalPolizza'); 
-            document.getElementById('searchInput').value = payload.codFiscale; cercaGlobale(); 
-          } else { alert(esito.errore); }
+        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
+          if (esito.success) { alert(esito.message); chiudiModal('modalPolizza'); document.getElementById('searchInput').value = payload.codFiscale; cercaGlobale(); } else { alert(esito.errore); }
         } catch(e) { alert("Errore di registrazione"); }
         btn.innerText = "Archivia Polizza";
+      }
+
+      async function salvaModificaPolizza() {
+        var btn = document.getElementById('btnSalvaModifica');
+        btn.innerText = "Salvataggio in corso...";
+        var payload = {
+          token: TOKEN, azione: "modificaPolizza", polizzaOriginale: currentPolizzaOriginale,
+          compagnia: document.getElementById('mpCompagnia').value, contraente: document.getElementById('mpContraente').value,
+          ramo: document.getElementById('mpRamo').value, polizza: document.getElementById('mpPolizza').value,
+          dataEffetto: document.getElementById('mpData').value, premio: document.getElementById('mpPremio').value,
+          frazionamento: document.getElementById('mpFrazionamento').value, codFiscale: document.getElementById('mpCF').value,
+          targa: document.getElementById('mpTarga').value, comune: document.getElementById('mpComune').value,
+          telefono: document.getElementById('mpTel').value, email: document.getElementById('mpEmail').value
+        };
+        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
+          if (esito.success) { alert(esito.message); chiudiModal('modalModifica'); cercaGlobale(); } else { alert(esito.errore); }
+        } catch(e) { alert("Errore durante la modifica"); }
+        btn.innerText = "Salva Modifiche";
+      }
+
+      async function eliminaPolizza(numero) {
+        if(!confirm("ATTENZIONE: Sei sicuro di voler eliminare definitivamente la polizza " + numero + "?\n\nL'operazione rimuoverà la riga corrispondente dal database di Google Fogli e non è reversibile.")) return;
+        try {
+          var payload = { token: TOKEN, azione: "eliminaPolizza", polizza: numero };
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) { alert(esito.message); cercaGlobale(); } else { alert(esito.errore); }
+        } catch(e) { alert("Errore durante l'eliminazione"); }
       }
 
       // Utility Gestione Interfaccia
@@ -339,8 +372,31 @@
         if(t.indexOf('azienda') > -1) return 'fa-industry';
         return 'fa-file-invoice';
       }
+      
       function apriModalContatti() { document.getElementById('modalContatti').style.display = 'block'; }
       function apriModalPolizza() { document.getElementById('modalPolizza').style.display = 'block'; }
+      
+      function apriModalModifica(profIndex, polIndex) {
+        var prof = profiliTrovati[profIndex];
+        var p = prof.polizze[polIndex];
+        currentPolizzaOriginale = p.numero;
+        
+        document.getElementById('mpCompagnia').value = p.compagnia;
+        document.getElementById('mpContraente').value = prof.anagrafica.nome;
+        document.getElementById('mpRamo').value = p.ramo;
+        document.getElementById('mpPolizza').value = p.numero;
+        document.getElementById('mpData').value = p.scadenza;
+        document.getElementById('mpPremio').value = p.premio;
+        document.getElementById('mpFrazionamento').value = p.frazionamento;
+        document.getElementById('mpCF').value = prof.anagrafica.codFiscale;
+        document.getElementById('mpTarga').value = p.targa || "";
+        document.getElementById('mpComune').value = prof.anagrafica.comune || "";
+        document.getElementById('mpTel').value = prof.anagrafica.telefono || "";
+        document.getElementById('mpEmail').value = prof.anagrafica.email || "";
+        
+        document.getElementById('modalModifica').style.display = 'block';
+      }
+      
       function chiudiModal(id) { document.getElementById(id).style.display = 'none'; }
     </script>
   </body>
