@@ -1,126 +1,290 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forlenza Rio | CRM Gestionale</title>
-    <link rel="icon" type="image/png" href="favicon.png?v=2">
+    <title>Forlenza Rio | CRM Gestionale 2.0</title>
+    <link rel="icon" type="image/png" href="favicon.png?v=3">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
       :root {
-        --brand-color: #0b394f; --brand-light: #155573; --accent-color: #95a5a6; 
-        --text-dark: #2c3e50; --bg-light: #f4f6f7; --success: #27ae60; --danger: #c0392b; --radius: 0px; 
+        --brand-color: #0b394f;
+        --brand-light: #155573;
+        --accent-color: #95a5a6;
+        --text-dark: #2c3e50;
+        --bg-light: #f4f6f7;
+        --success: #27ae60;
+        --warning: #e67e22;
+        --danger: #c0392b;
+        --whatsapp: #25D366;
       }
+      * { box-sizing: border-box; }
       body { font-family: 'Montserrat', sans-serif; margin: 0; padding: 0; background-color: var(--bg-light); color: var(--text-dark); }
-      .navbar { background-color: var(--brand-color); padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; color: white; border-bottom: 4px solid var(--accent-color); position: sticky; top: 0; z-index: 1000; }
-      .logo-text { font-weight: 700; font-size: 24px; letter-spacing: 2px; text-transform: uppercase; }
+      
+      /* Navbar */
+      .navbar { background-color: var(--brand-color); padding: 16px 5%; display: flex; justify-content: space-between; align-items: center; color: white; border-bottom: 4px solid var(--accent-color); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+      .logo-text { font-weight: 700; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; }
       .logo-subtext { font-size: 11px; font-style: italic; color: #ecf0f1; letter-spacing: 1px; margin-top: 2px; }
-      button { padding: 14px 25px; border: none; border-radius: var(--radius); cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.2s ease; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+      .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+      /* Pulsanti */
+      button { padding: 12px 20px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s ease; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 0.8px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
       .btn-primary { background-color: white; color: var(--brand-color); }
       .btn-primary:hover { background-color: var(--accent-color); color: white; }
-      .btn-action { background-color: var(--brand-color); color: white; width: 100%; padding: 16px; font-size: 15px; margin-top: 15px; }
+      .btn-action { background-color: var(--brand-color); color: white; }
       .btn-action:hover { background-color: var(--brand-light); }
-      
-      .login-box { background: white; max-width: 450px; margin: 100px auto; padding: 50px 40px; border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); text-align: center; }
-      .login-box h2 { color: var(--brand-color); margin-bottom: 15px; text-transform: uppercase; }
+      .btn-success { background-color: var(--success); color: white; }
+      .btn-success:hover { opacity: 0.9; }
+      .btn-whatsapp { background-color: var(--whatsapp); color: white; text-decoration: none; padding: 10px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+      .btn-whatsapp:hover { opacity: 0.9; }
+
+      /* Login */
+      .login-box { background: white; max-width: 440px; margin: 90px auto; padding: 45px 35px; border-top: 5px solid var(--brand-color); box-shadow: 0 8px 25px rgba(0,0,0,0.06); text-align: center; }
+      .login-box h2 { color: var(--brand-color); margin-bottom: 20px; text-transform: uppercase; }
       .input-group { position: relative; margin-bottom: 20px; }
-      .input-group i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #95a5a6; }
-      .input-full { width: 100%; padding: 16px 16px 16px 50px; border: 1px solid #bdc3c7; box-sizing: border-box; font-size: 16px; font-family: 'Montserrat', sans-serif; }
+      .input-group i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #95a5a6; }
+      .input-full { width: 100%; padding: 15px 15px 15px 46px; border: 1px solid #bdc3c7; font-size: 15px; font-family: 'Montserrat', sans-serif; }
       .input-full:focus { outline: none; border-color: var(--brand-color); }
 
-      #crmDashboard { display: none; padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
-      .search-bar { display: flex; gap: 15px; flex-wrap: wrap; background: white; padding: 25px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid var(--brand-color); }
-      .search-bar input { flex: 1; min-width: 250px; padding: 15px; border: 1px solid #bdc3c7; font-size: 16px; font-family: 'Montserrat', sans-serif; }
-      
-      .anagrafica-card { background: white; padding: 30px; border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-      .anagrafica-info h3 { margin: 0 0 15px 0; color: var(--brand-color); font-size: 24px; text-transform: uppercase;}
-      .anagrafica-info p { margin: 8px 0; font-size: 15px; }
-      
-      .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-      .policy-card { background: white; padding: 30px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s; display: flex; flex-direction: column;}
-      .policy-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
-      .policy-icon { position: absolute; top: 25px; right: 25px; font-size: 26px; color: #bdc3c7; }
-      .policy-type { font-size: 18px; font-weight: 700; color: var(--brand-color); margin-bottom: 5px; text-transform: uppercase; }
-      .policy-date { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; padding-top: 15px; border-top: 1px dashed #ecf0f1; margin-top: 15px; }
-      .link-gestionale { display: block; text-align: center; padding: 12px; background: var(--brand-color); color: white; text-decoration: none; font-weight: 600; font-size: 13px; text-transform: uppercase; margin-top: 20px; transition: 0.2s;}
+      /* Layout Principale */
+      #crmDashboard { display: none; padding: 30px 5%; max-width: 1280px; margin: 0 auto; }
+
+      /* Statistiche KPI Rapide */
+      .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; margin-bottom: 25px; }
+      .kpi-card { background: white; padding: 20px; border-left: 5px solid var(--brand-color); box-shadow: 0 3px 12px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.2s; }
+      .kpi-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+      .kpi-card.danger { border-left-color: var(--danger); }
+      .kpi-card.warning { border-left-color: var(--warning); }
+      .kpi-card.success { border-left-color: var(--success); }
+      .kpi-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #7f8c8d; letter-spacing: 0.5px; }
+      .kpi-value { font-size: 26px; font-weight: 700; color: var(--brand-color); margin-top: 5px; }
+      .kpi-icon { font-size: 28px; color: #dce1e5; }
+
+      /* Barra di Ricerca Istantanea */
+      .search-bar { display: flex; gap: 12px; flex-wrap: wrap; background: white; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 5px solid var(--brand-color); align-items: center; }
+      .search-input-wrapper { flex: 1; min-width: 240px; position: relative; }
+      .search-input-wrapper input { width: 100%; padding: 14px 40px 14px 15px; border: 1px solid #bdc3c7; font-size: 15px; font-family: 'Montserrat', sans-serif; }
+      .search-input-wrapper input:focus { outline: none; border-color: var(--brand-color); }
+      .clear-search { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #95a5a6; cursor: pointer; display: none; font-size: 16px; }
+
+      /* Scadenziario Tabs */
+      .tabs-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+      .tab-btn { background: #e8ecef; color: var(--text-dark); padding: 10px 18px; font-size: 12px; font-weight: 700; border-bottom: 3px solid transparent; }
+      .tab-btn.active { background: white; color: var(--brand-color); border-bottom-color: var(--brand-color); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+      /* Anagrafica Cliente */
+      .anagrafica-card { background: white; padding: 28px; border-top: 5px solid var(--brand-color); box-shadow: 0 5px 20px rgba(0,0,0,0.05); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+      .anagrafica-info h3 { margin: 0 0 12px 0; color: var(--brand-color); font-size: 22px; text-transform: uppercase; }
+      .anagrafica-info p { margin: 6px 0; font-size: 14px; }
+      .anagrafica-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+      /* Griglia Schede & Polizze */
+      .policies-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 22px; }
+      .policy-card { background: white; padding: 24px; border: 1px solid #e0e0e0; border-left: 6px solid var(--brand-color); position: relative; transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+      .policy-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+      .policy-card.tolleranza { border-left-color: var(--danger); }
+      .policy-card.in-scadenza { border-left-color: var(--warning); }
+      .policy-icon { position: absolute; top: 22px; right: 22px; font-size: 24px; color: #d0d7de; }
+      .policy-type { font-size: 17px; font-weight: 700; color: var(--brand-color); margin-bottom: 4px; text-transform: uppercase; padding-right: 35px; }
+      .badge-status { display: inline-block; padding: 4px 8px; font-size: 10px; font-weight: 700; text-transform: uppercase; color: white; margin-bottom: 10px; }
+      .badge-danger { background-color: var(--danger); }
+      .badge-warning { background-color: var(--warning); }
+      .badge-ok { background-color: var(--success); }
+
+      .policy-date { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; padding-top: 12px; border-top: 1px dashed #ecf0f1; margin-top: 12px; }
+      .link-gestionale { display: block; text-align: center; padding: 11px; background: var(--brand-color); color: white; text-decoration: none; font-weight: 600; font-size: 12px; text-transform: uppercase; margin-top: 15px; transition: 0.2s; }
       .link-gestionale:hover { background: var(--brand-light); }
 
-      .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 9999; overflow-y: auto; }
-      .modal-content { background: white; max-width: 600px; margin: 40px auto; padding: 40px; position: relative; border-top: 5px solid var(--brand-color); }
-      .modal-content h3 { color: var(--brand-color); text-transform: uppercase; margin-top: 0; }
-      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-      .form-input { width: 100%; padding: 12px; border: 1px solid #bdc3c7; font-family: 'Montserrat', sans-serif; box-sizing: border-box; }
-      
-      @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .anagrafica-card { flex-direction: column; align-items: flex-start; } }
+      /* Modali */
+      .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.65); z-index: 9999; overflow-y: auto; padding: 20px 10px; }
+      .modal-content { background: white; max-width: 640px; margin: 30px auto; padding: 35px; position: relative; border-top: 5px solid var(--brand-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+      .modal-content h3 { color: var(--brand-color); text-transform: uppercase; margin-top: 0; margin-bottom: 20px; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+      .form-field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; color: #555; margin-bottom: 5px; }
+      .form-input { width: 100%; padding: 11px; border: 1px solid #bdc3c7; font-family: 'Montserrat', sans-serif; font-size: 14px; background: white; }
+      .form-input:focus { outline: none; border-color: var(--brand-color); }
+
+      @media (max-width: 768px) {
+        .form-grid { grid-template-columns: 1fr; }
+        .anagrafica-card { flex-direction: column; align-items: flex-start; }
+        .navbar { flex-direction: column; gap: 12px; text-align: center; }
+      }
     </style>
   </head>
   <body>
+
+    <!-- Barra di Navigazione -->
     <div class="navbar">
-      <div class="logo-container">
-        <div class="logo-text">Forlenza Rio</div>
-        <div class="logo-subtext">CRM Gestionale Interno</div>
+      <div class="logo-container" onclick="mostraHomeScadenziario()">
+        <div class="logo-text"><i class="fas fa-shield-halved"></i> Forlenza Rio</div>
+        <div class="logo-subtext">CRM Plurimandatario &bull; Scadenziario & Portafoglio</div>
       </div>
-      <button class="btn-primary" onclick="logout()" style="padding: 10px 15px;"><i class="fas fa-sign-out-alt"></i> Disconnetti</button>
+      <div class="nav-actions">
+        <button class="btn-primary" onclick="sincronizzaDatabase()" title="Ricarica dati da Google Fogli" style="padding: 9px 14px;"><i class="fas fa-sync-alt" id="iconSync"></i> Aggiorna</button>
+        <button class="btn-primary" onclick="logout()" style="padding: 9px 14px;"><i class="fas fa-sign-out-alt"></i> Esci</button>
+      </div>
     </div>
 
-    <!-- Schermata Login -->
+    <!-- Schermata Login (1 volta ogni 24h) -->
     <div id="loginSection">
       <div class="login-box">
-        <i class="fas fa-shield-alt" style="font-size: 45px; color: var(--brand-color); margin-bottom: 25px;"></i>
-        <h2>Accesso Sicuro</h2>
+        <i class="fas fa-user-shield" style="font-size: 44px; color: var(--brand-color); margin-bottom: 20px;"></i>
+        <h2>Accesso Agente</h2>
         <div class="input-group">
           <i class="fas fa-lock"></i>
-          <input type="password" id="adminPassword" class="input-full" placeholder="Password operativa">
+          <input type="password" id="adminPassword" class="input-full" placeholder="Password operativa" onkeydown="if(event.key==='Enter') login()">
         </div>
-        <button class="btn-action" onclick="login()"><i class="fas fa-sign-in-alt"></i> Autenticazione</button>
+        <button class="btn-action" style="width:100%; padding:15px;" onclick="login()"><i class="fas fa-sign-in-alt"></i> Entra nel Gestionale</button>
       </div>
     </div>
 
-    <!-- Pannello Operativo -->
+    <!-- Cruscotto Operativo -->
     <div id="crmDashboard">
+      
+      <!-- KPI Riepilogo Rapido -->
+      <div class="kpi-grid">
+        <div class="kpi-card danger" onclick="mostraHomeScadenziario('tolleranza')">
+          <div>
+            <div class="kpi-title">In Tolleranza (15gg)</div>
+            <div class="kpi-value" id="kpiTolleranza">-</div>
+          </div>
+          <i class="fas fa-triangle-exclamation kpi-icon" style="color:var(--danger);"></i>
+        </div>
+        <div class="kpi-card warning" onclick="mostraHomeScadenziario('scadenza30')">
+          <div>
+            <div class="kpi-title">In Scadenza (30gg)</div>
+            <div class="kpi-value" id="kpiScadenza30">-</div>
+          </div>
+          <i class="fas fa-clock kpi-icon" style="color:var(--warning);"></i>
+        </div>
+        <div class="kpi-card" onclick="mostraTuttiClienti()">
+          <div>
+            <div class="kpi-title">Clienti in Portafoglio</div>
+            <div class="kpi-value" id="kpiClienti">-</div>
+          </div>
+          <i class="fas fa-users kpi-icon"></i>
+        </div>
+        <div class="kpi-card success" onclick="mostraTuttiClienti()">
+          <div>
+            <div class="kpi-title">Polizze Totali</div>
+            <div class="kpi-value" id="kpiPolizze">-</div>
+          </div>
+          <i class="fas fa-file-shield kpi-icon" style="color:var(--success);"></i>
+        </div>
+      </div>
+
+      <!-- Barra di Ricerca Istantanea -->
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Cerca Nome, C.F., Telefono, Email, Targa o Polizza...">
-        <button class="btn-action" style="margin: 0; width: auto;" onclick="cercaGlobale()" id="btnCerca"><i class="fas fa-search"></i> Avvia Ricerca</button>
-        <button class="btn-primary" style="margin: 0; border: 1px solid var(--brand-color);" onclick="apriModalPolizza()"><i class="fas fa-plus"></i> Nuova Polizza</button>
+        <div class="search-input-wrapper">
+          <input type="text" id="searchInput" placeholder="Digita Nome, Cognome, C.F., Targa, Telefono o Polizza (ricerca istantanea)..." oninput="ricercaIstantanea()" onkeydown="if(event.key==='Enter') ricercaIstantanea()">
+          <i class="fas fa-times-circle clear-search" id="btnClearSearch" onclick="pulisciRicerca()"></i>
+        </div>
+        <button class="btn-primary" style="border: 1px solid var(--brand-color);" onclick="mostraHomeScadenziario()"><i class="fas fa-calendar-alt"></i> Scadenziario</button>
+        <button class="btn-action" onclick="apriModalPolizza(false)"><i class="fas fa-plus"></i> Nuova Polizza</button>
       </div>
       
+      <div id="statoCaricamento" style="display:none; padding: 20px; background: white; text-align: center; font-weight: 600; color: var(--brand-color); margin-bottom: 20px;">
+        <i class="fas fa-spinner fa-spin"></i> Sincronizzazione del portafoglio polizze in corso...
+      </div>
       <div id="messaggio-errore" style="color: var(--danger); font-weight: 600; margin-bottom: 20px; display: none;"></div>
+      
+      <!-- Contenitore Dinamico Risultati / Scadenziario -->
       <div id="crmRisultati"></div>
     </div>
 
-    <!-- Modal Inserimento Contatti -->
+    <!-- Modal Integra Recapiti Cliente -->
     <div id="modalContatti" class="modal-overlay">
       <div class="modal-content">
-        <h3><i class="fas fa-address-book"></i> Integra Recapiti Cliente</h3>
-        <p style="margin-bottom:20px; font-size:14px; color:#555;">Inserisci i dati mancanti. Verranno salvati su tutte le polizze associate al Codice Fiscale.</p>
-        <input type="text" id="addTel" class="form-input" placeholder="Nuovo Numero di Telefono" style="margin-bottom:15px;">
-        <input type="email" id="addEmail" class="form-input" placeholder="Nuovo Indirizzo Email" style="margin-bottom:25px;">
-        <button class="btn-action" style="margin-top:0;" onclick="salvaContatti()" id="btnSalvaContatti">Salva nel Database</button>
+        <h3><i class="fas fa-address-book"></i> Aggiorna Recapiti Cliente</h3>
+        <p style="margin-bottom:20px; font-size:13px; color:#555;">I recapiti verranno salvati su tutte le polizze intestate a questo cliente.</p>
+        <div class="form-field" style="margin-bottom:15px;">
+          <label>Numero di Cellulare / Telefono</label>
+          <input type="tel" id="addTel" class="form-input" placeholder="Es. 3331234567">
+        </div>
+        <div class="form-field" style="margin-bottom:25px;">
+          <label>Indirizzo Email</label>
+          <input type="email" id="addEmail" class="form-input" placeholder="Es. cliente@email.it">
+        </div>
+        <button class="btn-action" style="width:100%; padding:15px;" onclick="salvaContatti()" id="btnSalvaContatti"><i class="fas fa-save"></i> Salva nel Database</button>
         <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalContatti')">Annulla</button>
       </div>
     </div>
 
-    <!-- Modal Nuova Polizza -->
+    <!-- Modal Nuova Polizza (Con Menu a Tendina e Calendario) -->
     <div id="modalPolizza" class="modal-overlay">
       <div class="modal-content">
-        <h3><i class="fas fa-file-contract"></i> Registra Nuova Polizza</h3>
+        <h3 id="titoloModalNuova"><i class="fas fa-file-contract"></i> Registra Nuova Polizza</h3>
         <div class="form-grid">
-          <input type="text" id="npCompagnia" class="form-input" placeholder="Compagnia (Es. BENE ASSICURAZIONI)">
-          <input type="text" id="npContraente" class="form-input" placeholder="Contraente (Nome e Cognome)">
-          <input type="text" id="npRamo" class="form-input" placeholder="Ramo (Es. AUTO, CASA)">
-          <input type="text" id="npPolizza" class="form-input" placeholder="Numero di Polizza">
-          <input type="text" id="npData" class="form-input" placeholder="Data Scadenza (GG/MM/AAAA)">
-          <input type="text" id="npPremio" class="form-input" placeholder="Premio (€)">
-          <input type="text" id="npFrazionamento" class="form-input" placeholder="Frazionamento (Es. ANNUALE)">
-          <input type="text" id="npCF" class="form-input" placeholder="Codice Fiscale">
-          <input type="text" id="npTarga" class="form-input" placeholder="Targa (se prevista)">
-          <input type="text" id="npComune" class="form-input" placeholder="Comune di Residenza">
-          <input type="text" id="npTel" class="form-input" placeholder="Telefono (Opzionale)">
-          <input type="text" id="npEmail" class="form-input" placeholder="Email (Opzionale)">
+          <div class="form-field">
+            <label>Compagnia *</label>
+            <select id="npCompagnia" class="form-input">
+              <option value="BENE ASSICURAZIONI">BENE ASSICURAZIONI</option>
+              <option value="REALE MUTUA">REALE MUTUA</option>
+              <option value="ALTRA COMPAGNIA">ALTRA COMPAGNIA</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Contraente (Cognome e Nome) *</label>
+            <input type="text" id="npContraente" class="form-input" placeholder="Es. ROSSI MARIO">
+          </div>
+          <div class="form-field">
+            <label>Ramo *</label>
+            <select id="npRamo" class="form-input">
+              <option value="AUTOMOTO & VAN">AUTOMOTO & VAN</option>
+              <option value="CASA & PATRIMONIO">CASA & PATRIMONIO</option>
+              <option value="VITA & SALUTE">VITA & SALUTE</option>
+              <option value="INFORTUNI">INFORTUNI</option>
+              <option value="IMPRESA & COMMERCIO">IMPRESA & COMMERCIO</option>
+              <option value="RC PROFESSIONALE">RC PROFESSIONALE</option>
+              <option value="ALTRO RAMO">ALTRO RAMO</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Numero di Polizza *</label>
+            <input type="text" id="npPolizza" class="form-input" placeholder="Es. 10004850001234">
+          </div>
+          <div class="form-field">
+            <label>Data Scadenza *</label>
+            <input type="date" id="npData" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Premio (€)</label>
+            <input type="number" step="0.01" id="npPremio" class="form-input" placeholder="Es. 350">
+          </div>
+          <div class="form-field">
+            <label>Frazionamento</label>
+            <select id="npFrazionamento" class="form-input">
+              <option value="ANNUALE">ANNUALE</option>
+              <option value="SEMESTRALE">SEMESTRALE</option>
+              <option value="QUADRIMESTRALE">QUADRIMESTRALE</option>
+              <option value="TRIMESTRALE">TRIMESTRALE</option>
+              <option value="MENSILE">MENSILE</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Codice Fiscale / P.IVA *</label>
+            <input type="text" id="npCF" class="form-input" placeholder="16 caratteri o P.IVA">
+          </div>
+          <div class="form-field">
+            <label>Targa Veicolo</label>
+            <input type="text" id="npTarga" class="form-input" placeholder="Es. AA123BB">
+          </div>
+          <div class="form-field">
+            <label>Comune di Residenza</label>
+            <input type="text" id="npComune" class="form-input" placeholder="Es. CONTURSI TERME">
+          </div>
+          <div class="form-field">
+            <label>Telefono</label>
+            <input type="tel" id="npTel" class="form-input" placeholder="Es. 3331234567">
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" id="npEmail" class="form-input" placeholder="Es. nome@email.it">
+          </div>
         </div>
-        <button class="btn-action" style="margin-top:0;" onclick="salvaNuovaPolizza()" id="btnSalvaPolizza">Archivia Polizza</button>
+        <button class="btn-action" style="width:100%; padding:15px;" onclick="salvaNuovaPolizza()" id="btnSalvaPolizza"><i class="fas fa-check"></i> Archivia Polizza</button>
         <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalPolizza')">Annulla</button>
       </div>
     </div>
@@ -130,20 +294,62 @@
       <div class="modal-content">
         <h3><i class="fas fa-edit"></i> Modifica Dati Polizza</h3>
         <div class="form-grid">
-          <input type="text" id="mpCompagnia" class="form-input" placeholder="Compagnia">
-          <input type="text" id="mpContraente" class="form-input" placeholder="Contraente">
-          <input type="text" id="mpRamo" class="form-input" placeholder="Ramo">
-          <input type="text" id="mpPolizza" class="form-input" placeholder="Numero di Polizza">
-          <input type="text" id="mpData" class="form-input" placeholder="Data Scadenza (GG/MM/AAAA)">
-          <input type="text" id="mpPremio" class="form-input" placeholder="Premio (€)">
-          <input type="text" id="mpFrazionamento" class="form-input" placeholder="Frazionamento">
-          <input type="text" id="mpCF" class="form-input" placeholder="Codice Fiscale">
-          <input type="text" id="mpTarga" class="form-input" placeholder="Targa">
-          <input type="text" id="mpComune" class="form-input" placeholder="Comune di Residenza">
-          <input type="text" id="mpTel" class="form-input" placeholder="Telefono">
-          <input type="text" id="mpEmail" class="form-input" placeholder="Email">
+          <div class="form-field">
+            <label>Compagnia</label>
+            <input type="text" id="mpCompagnia" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Contraente</label>
+            <input type="text" id="mpContraente" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Ramo</label>
+            <input type="text" id="mpRamo" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Numero di Polizza</label>
+            <input type="text" id="mpPolizza" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Data Scadenza (GG/MM/AAAA)</label>
+            <input type="text" id="mpData" class="form-input" placeholder="GG/MM/AAAA">
+          </div>
+          <div class="form-field">
+            <label>Premio (€)</label>
+            <input type="text" id="mpPremio" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Frazionamento</label>
+            <select id="mpFrazionamento" class="form-input">
+              <option value="ANNUALE">ANNUALE</option>
+              <option value="SEMESTRALE">SEMESTRALE</option>
+              <option value="QUADRIMESTRALE">QUADRIMESTRALE</option>
+              <option value="TRIMESTRALE">TRIMESTRALE</option>
+              <option value="MENSILE">MENSILE</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Codice Fiscale</label>
+            <input type="text" id="mpCF" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Targa</label>
+            <input type="text" id="mpTarga" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Comune</label>
+            <input type="text" id="mpComune" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Telefono</label>
+            <input type="tel" id="mpTel" class="form-input">
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" id="mpEmail" class="form-input">
+          </div>
         </div>
-        <button class="btn-action" style="margin-top:0;" onclick="salvaModificaPolizza()" id="btnSalvaModifica">Salva Modifiche</button>
+        <button class="btn-action" style="width:100%; padding:15px;" onclick="salvaModificaPolizza()" id="btnSalvaModifica"><i class="fas fa-save"></i> Salva Modifiche</button>
         <button class="btn-primary" style="width:100%; margin-top:10px; border:1px solid #bdc3c7;" onclick="chiudiModal('modalModifica')">Annulla</button>
       </div>
     </div>
@@ -152,11 +358,15 @@
       const TOKEN = "SEGRETO_FORLENZA_2026";
       const URL_API = "https://script.google.com/macros/s/AKfycbxwCGf7req_02xigi9qO70LEKqnAMjkvUR68UoPsYcuUCQHaQVEzdEUF0tex1rg8FeS5g/exec";
       
-      var profiliTrovati = [];
+      var databaseLocale = [];     // Intero portafoglio in memoria per ricerca a 0 secondi
+      var profiliTrovati = [];     // Risultati attualmente filtrati
+      var currentProfiloIndex = null;
       var currentCF = "";
+      var currentNomeCliente = "";
       var currentPolizzaOriginale = "";
+      var currentRowIndex = null;
 
-      // 0. Controllo automatico dell'accesso salvato all'avvio
+      // 0. Avvio e verifica sessione 24 ore
       window.onload = function() {
         var savedLogin = localStorage.getItem('forlenzaCrmAuth');
         var loginTime = localStorage.getItem('forlenzaCrmTime');
@@ -164,23 +374,19 @@
         if (savedLogin === 'true' && loginTime) {
           var now = new Date().getTime();
           var ore24 = 24 * 60 * 60 * 1000;
-          
           if (now - parseInt(loginTime) < ore24) {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('crmDashboard').style.display = 'block';
+            avviaGestionale();
           } else {
             logout();
           }
         }
       };
 
-      // 1. Gestione Accesso Sicuro
       function login() {
         if (document.getElementById('adminPassword').value === "Forlenza2026") {
           localStorage.setItem('forlenzaCrmAuth', 'true');
           localStorage.setItem('forlenzaCrmTime', new Date().getTime().toString());
-          document.getElementById('loginSection').style.display = 'none';
-          document.getElementById('crmDashboard').style.display = 'block';
+          avviaGestionale();
         } else {
           alert("Password di sicurezza errata.");
         }
@@ -192,194 +398,569 @@
         location.reload();
       }
 
-      // 2. Ricerca Globale Database
-      async function cercaGlobale() {
-        var query = document.getElementById('searchInput').value;
-        var btn = document.getElementById('btnCerca');
+      function avviaGestionale() {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('crmDashboard').style.display = 'block';
+        sincronizzaDatabase();
+      }
+
+      // 1. Scarica l'intero database in memoria una sola volta
+      async function sincronizzaDatabase(mantieniRicerca) {
+        var loader = document.getElementById('statoCaricamento');
         var errDiv = document.getElementById('messaggio-errore');
+        var iconSync = document.getElementById('iconSync');
         
-        if (!query) { errDiv.innerText = "Inserisci un parametro di ricerca."; errDiv.style.display = 'block'; return; }
-        
+        loader.style.display = 'block';
         errDiv.style.display = 'none';
-        btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Ricerca...';
-        
+        if (iconSync) iconSync.classList.add('fa-spin');
+
         try {
-          var res = await fetch(URL_API + "?token=" + TOKEN + "&q=" + encodeURIComponent(query));
+          var res = await fetch(URL_API + "?token=" + TOKEN + "&action=all&q=__all__");
           var dati = await res.json();
-          btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
-          
-          if (dati.errore) { errDiv.innerText = dati.errore; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = ''; return; }
-          
-          profiliTrovati = Array.isArray(dati) ? dati : [];
-          
-          if (profiliTrovati.length === 1) {
-             mostraDettaglioProfilo(0, false);
-          } else if (profiliTrovati.length > 1) {
-             mostraListaProfili();
+          loader.style.display = 'none';
+          if (iconSync) iconSync.classList.remove('fa-spin');
+
+          if (dati.errore) {
+            errDiv.innerText = dati.errore;
+            errDiv.style.display = 'block';
+            return;
+          }
+
+          databaseLocale = Array.isArray(dati) ? dati : [];
+          aggiornaStatisticheKPI();
+
+          var queryAttuale = document.getElementById('searchInput').value.trim();
+          if (mantieniRicerca && queryAttuale) {
+            ricercaIstantanea();
           } else {
-             errDiv.innerText = "Nessun cliente trovato."; errDiv.style.display = 'block'; document.getElementById('crmRisultati').innerHTML = '';
+            mostraHomeScadenziario('tolleranza');
           }
         } catch (e) {
-          btn.innerHTML = '<i class="fas fa-search"></i> Avvia Ricerca';
-          errDiv.innerText = "Errore di connessione al database."; errDiv.style.display = 'block';
+          loader.style.display = 'none';
+          if (iconSync) iconSync.classList.remove('fa-spin');
+          errDiv.innerText = "Errore di connessione al database Google Sheets. Verifica l'URL API.";
+          errDiv.style.display = 'block';
         }
       }
 
-      // 3. Mostra Lista di Clienti
+      // 2. Calcola KPI e stato scadenze
+      function calcolaGiorniAllaScadenza(strData) {
+        if (!strData) return 9999;
+        var parts = strData.split("/");
+        if (parts.length !== 3) return 9999;
+        var scad = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10), 0, 0, 0);
+        var oggi = new Date();
+        oggi.setHours(0, 0, 0, 0);
+        var diffTime = scad.getTime() - oggi.getTime();
+        return Math.round(diffTime / (1000 * 60 * 60 * 24));
+      }
+
+      function aggiornaStatisticheKPI() {
+        var totClienti = databaseLocale.length;
+        var totPolizze = 0;
+        var inTolleranza = 0;
+        var inScadenza30 = 0;
+
+        for (var i = 0; i < databaseLocale.length; i++) {
+          var pols = databaseLocale[i].polizze;
+          totPolizze += pols.length;
+          for (var j = 0; j < pols.length; j++) {
+            var gg = calcolaGiorniAllaScadenza(pols[j].scadenza);
+            if (gg >= -15 && gg < 0) inTolleranza++;
+            else if (gg >= 0 && gg <= 30) inScadenza30++;
+          }
+        }
+
+        document.getElementById('kpiClienti').innerText = totClienti;
+        document.getElementById('kpiPolizze').innerText = totPolizze;
+        document.getElementById('kpiTolleranza').innerText = inTolleranza;
+        document.getElementById('kpiScadenza30').innerText = inScadenza30;
+      }
+
+      // 3. Vista Home: Scadenziario Automatico (Tolleranza / Prossimi 30gg)
+      function mostraHomeScadenziario(tabAttivo) {
+        if (!tabAttivo) tabAttivo = 'tolleranza';
+        document.getElementById('searchInput').value = '';
+        document.getElementById('btnClearSearch').style.display = 'none';
+
+        var listaTolleranza = [];
+        var lista30gg = [];
+
+        for (var i = 0; i < databaseLocale.length; i++) {
+          var prof = databaseLocale[i];
+          for (var j = 0; j < prof.polizze.length; j++) {
+            var pol = prof.polizze[j];
+            var gg = calcolaGiorniAllaScadenza(pol.scadenza);
+            var item = { profIndex: i, polIndex: j, anagrafica: prof.anagrafica, polizza: pol, giorni: gg };
+            if (gg >= -15 && gg < 0) listaTolleranza.push(item);
+            else if (gg >= 0 && gg <= 30) lista30gg.push(item);
+          }
+        }
+
+        listaTolleranza.sort(function(a, b) { return a.giorni - b.giorni; });
+        lista30gg.sort(function(a, b) { return a.giorni - b.giorni; });
+
+        var html = '<div class="tabs-bar">';
+        html += '<button class="tab-btn ' + (tabAttivo === 'tolleranza' ? 'active' : '') + '" onclick="mostraHomeScadenziario(\'tolleranza\')"><i class="fas fa-exclamation-circle" style="color:var(--danger);"></i> In Tolleranza 15gg (' + listaTolleranza.length + ')</button>';
+        html += '<button class="tab-btn ' + (tabAttivo === 'scadenza30' ? 'active' : '') + '" onclick="mostraHomeScadenziario(\'scadenza30\')"><i class="fas fa-hourglass-half" style="color:var(--warning);"></i> In Scadenza 30gg (' + lista30gg.length + ')</button>';
+        html += '<button class="tab-btn" onclick="mostraTuttiClienti()"><i class="fas fa-address-card"></i> Elenco Completo Clienti (' + databaseLocale.length + ')</button>';
+        html += '</div>';
+
+        var listaCorrente = (tabAttivo === 'tolleranza') ? listaTolleranza : lista30gg;
+
+        if (listaCorrente.length === 0) {
+          html += '<div style="background:white; padding:35px; text-align:center; border-left:5px solid var(--success);">';
+          html += '<i class="fas fa-check-circle" style="font-size:38px; color:var(--success); margin-bottom:10px;"></i>';
+          html += '<h3 style="margin:0; color:var(--brand-color);">Nessuna polizza critica in questa fascia</h3>';
+          html += '<p style="color:#666; font-size:14px;">Usa la barra di ricerca in alto per cercare qualsiasi cliente o polizza in tempo reale.</p></div>';
+        } else {
+          html += '<div class="policies-grid">';
+          for (var k = 0; k < listaCorrente.length; k++) {
+            var it = listaCorrente[k];
+            html += renderCardPolizzaScadenziario(it);
+          }
+          html += '</div>';
+        }
+
+        document.getElementById('crmRisultati').innerHTML = html;
+      }
+
+      function renderCardPolizzaScadenziario(it) {
+        var p = it.polizza;
+        var ana = it.anagrafica;
+        var gg = it.giorni;
+        var classeCard = (gg < 0) ? 'tolleranza' : 'in-scadenza';
+        var badge = (gg < 0) 
+          ? '<span class="badge-status badge-danger">Scaduta da ' + Math.abs(gg) + ' gg (In Tolleranza)</span>'
+          : (gg === 0 ? '<span class="badge-status badge-danger">Scade Oggi!</span>' : '<span class="badge-status badge-warning">Scade tra ' + gg + ' giorni</span>');
+
+        var waLink = generaLinkWhatsApp(ana, p);
+
+        var h = '<div class="policy-card ' + classeCard + '">';
+        h += '<div>';
+        h += badge;
+        h += '<div class="policy-type" style="cursor:pointer;" onclick="apriProfiloDaDatabase(' + it.profIndex + ')"><i class="fas fa-user"></i> ' + ana.nome + '</div>';
+        h += '<div style="font-size:13px; font-weight:700; color:#555; margin-bottom:6px;">' + p.compagnia + ' &bull; ' + p.ramo + '</div>';
+        h += '<div style="font-family:monospace; font-size:14px; color:#444;">Polizza: <strong>' + p.numero + '</strong>' + (p.targa ? ' | Targa: <strong>' + p.targa + '</strong>' : '') + '</div>';
+        if (p.premio) h += '<div style="font-size:13px; margin-top:5px;">Premio: <strong>€ ' + p.premio + '</strong> (' + p.frazionamento + ')</div>';
+        h += '<div class="policy-date"><i class="far fa-calendar-check" style="color:var(--brand-color);"></i> Scadenza: <strong>' + p.scadenza + '</strong></div>';
+        h += '<div class="policy-date" style="border-top:none; padding-top:4px;"><i class="fas fa-shield-alt" style="color:var(--danger);"></i> Fine Tolleranza (+15gg): <strong style="color:var(--danger);">' + p.scadenzaTolleranza + '</strong></div>';
+        h += '</div>';
+
+        h += '<div style="margin-top:15px; display:flex; flex-direction:column; gap:8px;">';
+        h += '<div style="display:flex; gap:8px;">';
+        if (waLink) {
+          h += '<a href="' + waLink + '" target="_blank" class="btn-whatsapp" style="flex:1;"><i class="fab fa-whatsapp" style="font-size:15px;"></i> Avvisa WhatsApp</a>';
+        }
+        h += '<button class="btn-success" style="flex:1; padding:10px; font-size:11px;" onclick="rinnovaPolizzaRapida(' + it.profIndex + ', ' + it.polIndex + ', true)"><i class="fas fa-rotate-right"></i> Rinnova</button>';
+        h += '</div>';
+        h += '<button class="btn-primary" style="width:100%; border:1px solid var(--brand-color); padding:9px; font-size:12px;" onclick="apriProfiloDaDatabase(' + it.profIndex + ')"><i class="fas fa-folder-open"></i> Apri Scheda Cliente</button>';
+        h += '</div></div>';
+        return h;
+      }
+
+      // 4. Ricerca Istantanea in Tempo Reale (0 secondi)
+      function ricercaIstantanea() {
+        var query = document.getElementById('searchInput').value.trim().toLowerCase();
+        var btnClear = document.getElementById('btnClearSearch');
+        var errDiv = document.getElementById('messaggio-errore');
+        errDiv.style.display = 'none';
+
+        if (!query) {
+          btnClear.style.display = 'none';
+          mostraHomeScadenziario('tolleranza');
+          return;
+        }
+
+        btnClear.style.display = 'block';
+        profiliTrovati = [];
+
+        for (var i = 0; i < databaseLocale.length; i++) {
+          var prof = databaseLocale[i];
+          var ana = prof.anagrafica;
+          var matchAnagrafica = (
+            (ana.nome && ana.nome.toLowerCase().indexOf(query) > -1) ||
+            (ana.codFiscale && ana.codFiscale.toLowerCase().indexOf(query) > -1) ||
+            (ana.telefono && ana.telefono.toLowerCase().indexOf(query) > -1) ||
+            (ana.email && ana.email.toLowerCase().indexOf(query) > -1) ||
+            (ana.comune && ana.comune.toLowerCase().indexOf(query) > -1)
+          );
+
+          var matchPolizza = false;
+          for (var j = 0; j < prof.polizze.length; j++) {
+            var pol = prof.polizze[j];
+            if (
+              (pol.numero && pol.numero.toLowerCase().indexOf(query) > -1) ||
+              (pol.targa && pol.targa.toLowerCase().indexOf(query) > -1) ||
+              (pol.ramo && pol.ramo.toLowerCase().indexOf(query) > -1)
+            ) {
+              matchPolizza = true;
+              break;
+            }
+          }
+
+          if (matchAnagrafica || matchPolizza) {
+            profiliTrovati.push(prof);
+          }
+        }
+
+        if (profiliTrovati.length === 1) {
+          mostraDettaglioProfilo(0, false);
+        } else if (profiliTrovati.length > 1) {
+          mostraListaProfili();
+        } else {
+          document.getElementById('crmRisultati').innerHTML = '<div style="background:white; padding:30px; text-align:center; border-left:5px solid var(--danger); font-weight:600;">Nessun cliente o polizza trovata per "' + query + '".</div>';
+        }
+      }
+
+      function pulisciRicerca() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('btnClearSearch').style.display = 'none';
+        mostraHomeScadenziario('tolleranza');
+      }
+
+      function mostraTuttiClienti() {
+        profiliTrovati = databaseLocale.slice().sort(function(a, b) {
+          return (a.anagrafica.nome || "").localeCompare(b.anagrafica.nome || "");
+        });
+        mostraListaProfili();
+      }
+
+      function apriProfiloDaDatabase(dbIndex) {
+        profiliTrovati = [databaseLocale[dbIndex]];
+        mostraDettaglioProfilo(0, false);
+      }
+
+      // 5. Lista Profili Clienti
       function mostraListaProfili() {
-        var html = '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-users"></i> Clienti Trovati (' + profiliTrovati.length + ')</h2>';
+        var html = '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">';
+        html += '<h2 style="color:var(--brand-color); text-transform:uppercase; margin:0;"><i class="fas fa-users"></i> Clienti Trovati (' + profiliTrovati.length + ')</h2>';
+        html += '<button class="btn-primary" style="border:1px solid var(--brand-color);" onclick="mostraHomeScadenziario()"><i class="fas fa-arrow-left"></i> Torna allo Scadenziario</button>';
+        html += '</div>';
         html += '<div class="policies-grid">';
         
         for (var i = 0; i < profiliTrovati.length; i++) {
-            var ana = profiliTrovati[i].anagrafica;
-            var numPolizze = profiliTrovati[i].polizze.length;
-            html += '<div class="policy-card" style="cursor:pointer;" onclick="mostraDettaglioProfilo(' + i + ', true)">';
-            html += '<i class="fas fa-user-circle policy-icon"></i>';
-            html += '<div class="policy-type">' + (ana.nome || 'Sconosciuto') + '</div>';
-            html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">C.F.: ' + (ana.codFiscale || 'N/D') + '</div>';
-            html += '<div style="font-size:14px; margin-bottom:15px;"><i class="fas fa-map-marker-alt"></i> ' + (ana.comune || 'N/D') + '</div>';
-            html += '<div class="policy-date"><i class="fas fa-file-contract" style="color:var(--brand-color);"></i> Polizze collegate: <span style="font-weight:700;">' + numPolizze + '</span></div>';
-            html += '<div class="link-gestionale">Apri Scheda Cliente</div>';
-            html += '</div>';
+          var ana = profiliTrovati[i].anagrafica;
+          var numPolizze = profiliTrovati[i].polizze.length;
+          html += '<div class="policy-card" style="cursor:pointer;" onclick="mostraDettaglioProfilo(' + i + ', true)">';
+          html += '<div>';
+          html += '<i class="fas fa-user-circle policy-icon"></i>';
+          html += '<div class="policy-type">' + (ana.nome || 'Sconosciuto') + '</div>';
+          html += '<div style="font-weight:600; font-size:13px; margin-bottom:5px;">C.F.: ' + (ana.codFiscale || 'N/D') + '</div>';
+          html += '<div style="font-size:13px; margin-bottom:10px;"><i class="fas fa-map-marker-alt"></i> ' + (ana.comune || 'N/D') + '</div>';
+          if (ana.telefono) html += '<div style="font-size:13px; color:var(--success); font-weight:600;"><i class="fas fa-phone"></i> ' + ana.telefono + '</div>';
+          html += '<div class="policy-date"><i class="fas fa-file-contract" style="color:var(--brand-color);"></i> Polizze attive: <strong>' + numPolizze + '</strong></div>';
+          html += '</div>';
+          html += '<div class="link-gestionale">Apri Scheda Cliente</div>';
+          html += '</div>';
         }
         html += '</div>';
         document.getElementById('crmRisultati').innerHTML = html;
       }
 
-      // 4. Mostra Dettaglio Cliente Specifico
+      // 6. Scheda Dettaglio Cliente Unificata + Azioni Rapide
       function mostraDettaglioProfilo(index, fromList) {
+        currentProfiloIndex = index;
         var dati = profiliTrovati[index];
-        currentCF = dati.anagrafica.codFiscale;
+        currentCF = dati.anagrafica.codFiscale || "";
+        currentNomeCliente = dati.anagrafica.nome || "";
         var html = '';
         
+        html += '<div style="display:flex; gap:10px; margin-bottom:20px;">';
         if (fromList) {
-            html += '<button class="btn-primary" style="margin-bottom: 20px; border: 1px solid var(--brand-color); padding: 8px 15px;" onclick="mostraListaProfili()"><i class="fas fa-arrow-left"></i> Torna alla lista</button>';
+          html += '<button class="btn-primary" style="border: 1px solid var(--brand-color); padding: 9px 15px;" onclick="mostraListaProfili()"><i class="fas fa-arrow-left"></i> Torna alla lista clienti</button>';
+        } else {
+          html += '<button class="btn-primary" style="border: 1px solid var(--brand-color); padding: 9px 15px;" onclick="mostraHomeScadenziario()"><i class="fas fa-arrow-left"></i> Torna allo Scadenziario</button>';
         }
+        html += '</div>';
         
-        // Sezione Anagrafica
-        var tel = dati.anagrafica.telefono ? dati.anagrafica.telefono : '<span style="color:var(--danger)">Mancante</span>';
-        var em = dati.anagrafica.email ? dati.anagrafica.email : '<span style="color:var(--danger)">Mancante</span>';
+        var tel = dati.anagrafica.telefono 
+          ? '<a href="tel:' + dati.anagrafica.telefono + '" style="color:var(--brand-color); font-weight:700; text-decoration:none;">' + dati.anagrafica.telefono + '</a>' 
+          : '<span style="color:var(--danger); font-weight:600;">Mancante</span>';
+        var em = dati.anagrafica.email 
+          ? '<a href="mailto:' + dati.anagrafica.email + '" style="color:var(--brand-color); text-decoration:none;">' + dati.anagrafica.email + '</a>' 
+          : '<span style="color:var(--danger); font-weight:600;">Mancante</span>';
         
         html += '<div class="anagrafica-card"><div class="anagrafica-info">';
         html += '<h3><i class="fas fa-user-tie"></i> ' + (dati.anagrafica.nome || 'Dato non rilevato') + '</h3>';
         html += '<p><strong><i class="fas fa-id-card"></i> C.Fiscale:</strong> ' + (dati.anagrafica.codFiscale || 'N/D') + ' &nbsp;|&nbsp; <strong><i class="fas fa-map-marker-alt"></i> Comune:</strong> ' + (dati.anagrafica.comune || 'N/D') + '</p>';
         html += '<p><strong><i class="fas fa-phone"></i> Telefono:</strong> ' + tel + ' &nbsp;|&nbsp; <strong><i class="fas fa-envelope"></i> Email:</strong> ' + em + '</p>';
-        html += '</div><div>';
-        
-        if (!dati.anagrafica.telefono || !dati.anagrafica.email) {
-          html += '<button class="btn-primary" style="border: 2px solid var(--brand-color);" onclick="apriModalContatti()"><i class="fas fa-user-edit"></i> Integra Recapiti</button>';
-        }
+        html += '</div><div class="anagrafica-actions">';
+        html += '<button class="btn-primary" style="border: 2px solid var(--brand-color);" onclick="apriModalContatti()"><i class="fas fa-user-edit"></i> ' + (!dati.anagrafica.telefono || !dati.anagrafica.email ? 'Integra Recapiti' : 'Modifica Recapiti') + '</button>';
+        html += '<button class="btn-action" onclick="apriModalPolizza(true)"><i class="fas fa-plus-circle"></i> + Polizza a questo Cliente</button>';
         html += '</div></div>';
         
-        // Griglia Polizze Attive
-        html += '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-folder-open"></i> Portafoglio Polizze</h2>';
+        html += '<h2 style="color:var(--brand-color); text-transform:uppercase; margin-bottom:20px;"><i class="fas fa-folder-open"></i> Portafoglio Polizze (' + dati.polizze.length + ')</h2>';
         html += '<div class="policies-grid">';
         
         for (var i = 0; i < dati.polizze.length; i++) {
           var p = dati.polizze[i];
           var icona = getIconaPerTipo(p.ramo);
           var gestLink = (p.compagnia.toUpperCase().indexOf('BENE') > -1) ? 'https://www.bene.it' : 'https://www.realemutua.it';
+          var gg = calcolaGiorniAllaScadenza(p.scadenza);
+          var badgeStato = '';
+          if (gg >= -15 && gg < 0) badgeStato = '<span class="badge-status badge-danger">In Tolleranza (Scaduta da ' + Math.abs(gg) + 'gg)</span>';
+          else if (gg >= 0 && gg <= 30) badgeStato = '<span class="badge-status badge-warning">In Scadenza tra ' + gg + 'gg</span>';
+          else if (gg > 30 && gg < 5000) badgeStato = '<span class="badge-status badge-ok">Attiva</span>';
+
+          var waLink = generaLinkWhatsApp(dati.anagrafica, p);
           
           html += '<div class="policy-card">';
           html += '<i class="fas ' + icona + ' policy-icon"></i>';
-          html += '<div style="flex-grow: 1;">';
+          html += '<div>';
+          html += badgeStato;
           html += '<div class="policy-type">' + p.compagnia + '</div>';
-          html += '<div style="font-weight:600; font-size:14px; margin-bottom:5px;">Ramo: ' + p.ramo + ' &nbsp;|&nbsp; Fraz.: ' + p.frazionamento + '</div>';
-          html += '<div style="font-family:monospace; font-size:15px; margin-bottom:10px; color:#555;">Polizza: ' + p.numero + '</div>';
-          if(p.targa) { html += '<div style="font-size:14px; font-weight:600; margin-bottom:15px;"><i class="fas fa-car"></i> Targa: ' + p.targa + '</div>'; }
-          html += '<div class="policy-date"><i class="far fa-calendar-check" style="color:var(--brand-color);"></i> Scadenza Copertura: <span style="font-weight:700;">' + p.scadenza + '</span></div>';
-          html += '<div class="policy-date" style="border-top:none; padding-top:5px;"><i class="fas fa-exclamation-triangle" style="color:#e67e22;"></i> Tolleranza (+15gg): <span style="color:#e67e22; font-weight:700;">' + p.scadenzaTolleranza + '</span></div>';
+          html += '<div style="font-weight:600; font-size:13px; margin-bottom:5px;">Ramo: ' + p.ramo + ' &nbsp;|&nbsp; Fraz.: ' + p.frazionamento + '</div>';
+          html += '<div style="font-family:monospace; font-size:14px; margin-bottom:6px; color:#444;">Polizza: <strong>' + p.numero + '</strong></div>';
+          if (p.premio) html += '<div style="font-size:14px; font-weight:700; color:var(--brand-color); margin-bottom:8px;">Premio: € ' + p.premio + '</div>';
+          if (p.targa) html += '<div style="font-size:13px; font-weight:600; margin-bottom:10px;"><i class="fas fa-car"></i> Targa: ' + p.targa + '</div>';
+          html += '<div class="policy-date"><i class="far fa-calendar-check" style="color:var(--brand-color);"></i> Scadenza Copertura: <strong>' + p.scadenza + '</strong></div>';
+          html += '<div class="policy-date" style="border-top:none; padding-top:4px;"><i class="fas fa-exclamation-triangle" style="color:var(--warning);"></i> Tolleranza (+15gg): <strong style="color:var(--warning);">' + p.scadenzaTolleranza + '</strong></div>';
           html += '</div>';
           
-          html += '<a href="' + gestLink + '" target="_blank" class="link-gestionale"><i class="fas fa-external-link-square-alt"></i> Apri Portale Compagnia</a>';
+          html += '<div>';
+          html += '<a href="' + gestLink + '" target="_blank" class="link-gestionale"><i class="fas fa-external-link-square-alt"></i> Apri Portale ' + (p.compagnia.toUpperCase().indexOf('BENE') > -1 ? 'Bene' : 'Reale Mutua') + '</a>';
           
-          // NUOVI BOTTONI MODIFICA ed ELIMINA
-          html += '<div style="display:flex; gap:10px; margin-top:15px;">';
-          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--brand-color); padding: 10px;" onclick="apriModalModifica(' + index + ', ' + i + ')"><i class="fas fa-edit"></i> Modifica</button>';
-          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--danger); color: var(--danger); padding: 10px;" onclick="eliminaPolizza(\'' + p.numero + '\')"><i class="fas fa-trash-alt"></i> Elimina</button>';
+          // Pulsanti WhatsApp + Rinnovo Rapido 1 Clic
+          html += '<div style="display:flex; gap:8px; margin-top:10px;">';
+          if (waLink) {
+            html += '<a href="' + waLink + '" target="_blank" class="btn-whatsapp" style="flex:1;"><i class="fab fa-whatsapp" style="font-size:15px;"></i> WhatsApp</a>';
+          }
+          html += '<button class="btn-success" style="flex:1; padding:10px; font-size:11px;" onclick="rinnovaPolizzaRapida(' + index + ', ' + i + ', false)"><i class="fas fa-rotate-right"></i> Rinnova</button>';
           html += '</div>';
+
+          // Pulsanti Modifica ed Elimina
+          html += '<div style="display:flex; gap:8px; margin-top:8px;">';
+          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--brand-color); padding: 9px; font-size:11px;" onclick="apriModalModifica(' + index + ', ' + i + ')"><i class="fas fa-edit"></i> Modifica</button>';
+          html += '<button class="btn-primary" style="flex:1; border: 1px solid var(--danger); color: var(--danger); padding: 9px; font-size:11px;" onclick="eliminaPolizza(\'' + p.numero + '\', ' + (p.rowIndex || 'null') + ')"><i class="fas fa-trash-alt"></i> Elimina</button>';
           html += '</div>';
+          html += '</div></div>';
         }
         html += '</div>';
         document.getElementById('crmRisultati').innerHTML = html;
       }
 
-      // 5. Funzioni Scrittura e Modifica Database
+      // 7. Generatore Link WhatsApp Precompilato
+      function generaLinkWhatsApp(ana, p) {
+        if (!ana.telefono) return null;
+        var numPulito = ana.telefono.toString().replace(/[^0-9]/g, '');
+        if (!numPulito) return null;
+        if (numPulito.indexOf('0039') === 0) numPulito = numPulito.substring(2);
+        else if (numPulito.indexOf('39') !== 0 && numPulito.length <= 10) numPulito = '39' + numPulito;
+
+        var targaTxt = p.targa ? " (Targa " + p.targa + ")" : "";
+        var premioTxt = p.premio ? " di € " + p.premio : "";
+        var msg = "Gentile " + ana.nome + ", ti ricordiamo che la tua polizza " + p.compagnia + " n. " + p.numero + targaTxt + premioTxt + " ha scadenza il " + p.scadenza + " (termine tolleranza: " + p.scadenzaTolleranza + "). Siamo a disposizione in agenzia per il rinnovo. Cordiali saluti, Agenzia Assicurativa Forlenza Rio.";
+        return "https://wa.me/" + numPulito + "?text=" + encodeURIComponent(msg);
+      }
+
+      // 8. Rinnovo Polizza con 1 Clic (+1 Anno / +6 Mesi automatico)
+      async function rinnovaPolizzaRapida(profIdx, polIdx, daScadenziario) {
+        var prof = daScadenziario ? databaseLocale[profIdx] : profiliTrovati[profIdx];
+        var p = prof.polizze[polIdx];
+        if (!p.scadenza || p.scadenza.split("/").length !== 3) {
+          alert("Formato data di scadenza non valido per il rinnovo automatico. Usa il tasto Modifica.");
+          return;
+        }
+
+        var parts = p.scadenza.split("/");
+        var dataAttuale = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+        var fraz = (p.frazionamento || "ANNUALE").toUpperCase();
+        var mesiAggiunti = 12;
+        if (fraz.indexOf("SEMESTR") > -1) mesiAggiunti = 6;
+        else if (fraz.indexOf("QUADRIM") > -1) mesiAggiunti = 4;
+        else if (fraz.indexOf("TRIMESTR") > -1) mesiAggiunti = 3;
+        else if (fraz.indexOf("MENSIL") > -1) mesiAggiunti = 1;
+
+        dataAttuale.setMonth(dataAttuale.getMonth() + mesiAggiunti);
+        var gg = String(dataAttuale.getDate()).padStart(2, '0');
+        var mm = String(dataAttuale.getMonth() + 1).padStart(2, '0');
+        var aaaa = dataAttuale.getFullYear();
+        var nuovaDataStr = gg + "/" + mm + "/" + aaaa;
+
+        if (!confirm("Rinnovare la polizza " + p.numero + " (" + fraz + ")?\n\nScadenza attuale: " + p.scadenza + "\nNuova scadenza: " + nuovaDataStr)) return;
+
+        try {
+          var payload = { token: TOKEN, azione: "rinnovaPolizza", polizza: p.numero, rowIndex: p.rowIndex, nuovaScadenza: nuovaDataStr };
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) {
+            alert(esito.message);
+            sincronizzaDatabase(true);
+          } else {
+            alert(esito.errore);
+          }
+        } catch(e) {
+          alert("Errore durante il rinnovo della polizza.");
+        }
+      }
+
+      // 9. Funzioni di Scrittura e Modifica Database
       async function salvaContatti() {
         var btn = document.getElementById('btnSalvaContatti');
         btn.innerText = "Salvataggio in corso...";
-        var payload = { token: TOKEN, azione: "aggiornaContatto", codFiscale: currentCF, telefono: document.getElementById('addTel').value, email: document.getElementById('addEmail').value };
-        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
-          if (esito.success) { alert(esito.message); chiudiModal('modalContatti'); cercaGlobale(); } else { alert(esito.errore); }
+        var payload = {
+          token: TOKEN,
+          azione: "aggiornaContatto",
+          codFiscale: currentCF,
+          nome: currentNomeCliente,
+          telefono: document.getElementById('addTel').value,
+          email: document.getElementById('addEmail').value
+        };
+        try {
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) {
+            alert(esito.message);
+            chiudiModal('modalContatti');
+            sincronizzaDatabase(true);
+          } else {
+            alert(esito.errore);
+          }
         } catch(e) { alert("Errore di sincronizzazione"); }
-        btn.innerText = "Salva nel Database";
+        btn.innerHTML = '<i class="fas fa-save"></i> Salva nel Database';
       }
 
       async function salvaNuovaPolizza() {
         var btn = document.getElementById('btnSalvaPolizza');
-        btn.innerText = "Registrazione in corso...";
+        var rawDate = document.getElementById('npData').value; // YYYY-MM-DD dal selettore calendario
+        var dataItaliana = "";
+        if (rawDate && rawDate.indexOf("-") > -1) {
+          var dp = rawDate.split("-");
+          dataItaliana = dp[2] + "/" + dp[1] + "/" + dp[0];
+        } else {
+          dataItaliana = rawDate;
+        }
+
         var payload = {
           token: TOKEN, azione: "aggiungiPolizza",
-          compagnia: document.getElementById('npCompagnia').value, contraente: document.getElementById('npContraente').value,
-          ramo: document.getElementById('npRamo').value, polizza: document.getElementById('npPolizza').value,
-          dataEffetto: document.getElementById('npData').value, premio: document.getElementById('npPremio').value,
-          frazionamento: document.getElementById('npFrazionamento').value, codFiscale: document.getElementById('npCF').value,
-          targa: document.getElementById('npTarga').value, comune: document.getElementById('npComune').value,
-          telefono: document.getElementById('npTel').value, email: document.getElementById('npEmail').value
+          compagnia: document.getElementById('npCompagnia').value,
+          contraente: document.getElementById('npContraente').value,
+          ramo: document.getElementById('npRamo').value,
+          polizza: document.getElementById('npPolizza').value,
+          dataEffetto: dataItaliana,
+          premio: document.getElementById('npPremio').value,
+          frazionamento: document.getElementById('npFrazionamento').value,
+          codFiscale: document.getElementById('npCF').value,
+          targa: document.getElementById('npTarga').value,
+          comune: document.getElementById('npComune').value,
+          telefono: document.getElementById('npTel').value,
+          email: document.getElementById('npEmail').value
         };
-        if (!payload.compagnia || !payload.contraente || !payload.polizza) { alert("Compilare almeno Compagnia, Contraente e Polizza."); btn.innerText = "Archivia Polizza"; return; }
-        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
-          if (esito.success) { alert(esito.message); chiudiModal('modalPolizza'); document.getElementById('searchInput').value = payload.codFiscale; cercaGlobale(); } else { alert(esito.errore); }
+        if (!payload.compagnia || !payload.contraente || !payload.polizza) {
+          alert("Compilare almeno Compagnia, Contraente e Numero di Polizza.");
+          return;
+        }
+        btn.innerText = "Registrazione in corso...";
+        try {
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) {
+            alert(esito.message);
+            chiudiModal('modalPolizza');
+            document.getElementById('searchInput').value = payload.codFiscale || payload.contraente;
+            sincronizzaDatabase(true);
+          } else {
+            alert(esito.errore);
+          }
         } catch(e) { alert("Errore di registrazione"); }
-        btn.innerText = "Archivia Polizza";
+        btn.innerHTML = '<i class="fas fa-check"></i> Archivia Polizza';
       }
 
       async function salvaModificaPolizza() {
         var btn = document.getElementById('btnSalvaModifica');
         btn.innerText = "Salvataggio in corso...";
         var payload = {
-          token: TOKEN, azione: "modificaPolizza", polizzaOriginale: currentPolizzaOriginale,
-          compagnia: document.getElementById('mpCompagnia').value, contraente: document.getElementById('mpContraente').value,
-          ramo: document.getElementById('mpRamo').value, polizza: document.getElementById('mpPolizza').value,
-          dataEffetto: document.getElementById('mpData').value, premio: document.getElementById('mpPremio').value,
-          frazionamento: document.getElementById('mpFrazionamento').value, codFiscale: document.getElementById('mpCF').value,
-          targa: document.getElementById('mpTarga').value, comune: document.getElementById('mpComune').value,
-          telefono: document.getElementById('mpTel').value, email: document.getElementById('mpEmail').value
+          token: TOKEN, azione: "modificaPolizza",
+          polizzaOriginale: currentPolizzaOriginale,
+          rowIndex: currentRowIndex,
+          compagnia: document.getElementById('mpCompagnia').value,
+          contraente: document.getElementById('mpContraente').value,
+          ramo: document.getElementById('mpRamo').value,
+          polizza: document.getElementById('mpPolizza').value,
+          dataEffetto: document.getElementById('mpData').value,
+          premio: document.getElementById('mpPremio').value,
+          frazionamento: document.getElementById('mpFrazionamento').value,
+          codFiscale: document.getElementById('mpCF').value,
+          targa: document.getElementById('mpTarga').value,
+          comune: document.getElementById('mpComune').value,
+          telefono: document.getElementById('mpTel').value,
+          email: document.getElementById('mpEmail').value
         };
-        try { var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) }); var esito = await res.json();
-          if (esito.success) { alert(esito.message); chiudiModal('modalModifica'); cercaGlobale(); } else { alert(esito.errore); }
-        } catch(e) { alert("Errore durante la modifica"); }
-        btn.innerText = "Salva Modifiche";
-      }
-
-      async function eliminaPolizza(numero) {
-        if(!confirm("ATTENZIONE: Sei sicuro di voler eliminare definitivamente la polizza " + numero + "?\n\nL'operazione rimuoverà la riga corrispondente dal database di Google Fogli e non è reversibile.")) return;
         try {
-          var payload = { token: TOKEN, azione: "eliminaPolizza", polizza: numero };
           var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
           var esito = await res.json();
-          if (esito.success) { alert(esito.message); cercaGlobale(); } else { alert(esito.errore); }
+          if (esito.success) {
+            alert(esito.message);
+            chiudiModal('modalModifica');
+            sincronizzaDatabase(true);
+          } else {
+            alert(esito.errore);
+          }
+        } catch(e) { alert("Errore durante la modifica"); }
+        btn.innerHTML = '<i class="fas fa-save"></i> Salva Modifiche';
+      }
+
+      async function eliminaPolizza(numero, rowIndex) {
+        if (!confirm("ATTENZIONE: Sei sicuro di voler eliminare definitivamente la polizza " + numero + "?\n\nL'operazione rimuoverà la riga da Google Fogli.")) return;
+        try {
+          var payload = { token: TOKEN, azione: "eliminaPolizza", polizza: numero, rowIndex: rowIndex };
+          var res = await fetch(URL_API, { method: "POST", body: JSON.stringify(payload) });
+          var esito = await res.json();
+          if (esito.success) {
+            alert(esito.message);
+            sincronizzaDatabase(true);
+          } else {
+            alert(esito.errore);
+          }
         } catch(e) { alert("Errore durante l'eliminazione"); }
       }
 
-      // Utility Gestione Interfaccia
+      // Utility Modali & Icone
       function getIconaPerTipo(tipo) {
-        var t = tipo.toLowerCase();
-        if(t.indexOf('auto') > -1 || t.indexOf('moto') > -1) return 'fa-car';
-        if(t.indexOf('casa') > -1) return 'fa-home';
-        if(t.indexOf('vita') > -1 || t.indexOf('salute') > -1) return 'fa-heartbeat';
-        if(t.indexOf('infortuni') > -1) return 'fa-crutch';
-        if(t.indexOf('azienda') > -1) return 'fa-industry';
+        var t = (tipo || "").toLowerCase();
+        if (t.indexOf('auto') > -1 || t.indexOf('moto') > -1) return 'fa-car';
+        if (t.indexOf('casa') > -1 || t.indexOf('patrimonio') > -1) return 'fa-home';
+        if (t.indexOf('vita') > -1 || t.indexOf('salute') > -1) return 'fa-heartbeat';
+        if (t.indexOf('infortuni') > -1) return 'fa-user-injured';
+        if (t.indexOf('impresa') > -1 || t.indexOf('azienda') > -1) return 'fa-industry';
         return 'fa-file-invoice';
       }
       
-      function apriModalContatti() { document.getElementById('modalContatti').style.display = 'block'; }
-      function apriModalPolizza() { document.getElementById('modalPolizza').style.display = 'block'; }
+      function apriModalContatti() {
+        var prof = profiliTrovati[currentProfiloIndex];
+        document.getElementById('addTel').value = (prof && prof.anagrafica.telefono) ? prof.anagrafica.telefono : "";
+        document.getElementById('addEmail').value = (prof && prof.anagrafica.email) ? prof.anagrafica.email : "";
+        document.getElementById('modalContatti').style.display = 'block';
+      }
+
+      function apriModalPolizza(precompilaCliente) {
+        if (precompilaCliente && currentProfiloIndex !== null && profiliTrovati[currentProfiloIndex]) {
+          var ana = profiliTrovati[currentProfiloIndex].anagrafica;
+          document.getElementById('npContraente').value = ana.nome || "";
+          document.getElementById('npCF').value = ana.codFiscale || "";
+          document.getElementById('npComune').value = ana.comune || "";
+          document.getElementById('npTel').value = ana.telefono || "";
+          document.getElementById('npEmail').value = ana.email || "";
+        } else {
+          document.getElementById('npContraente').value = "";
+          document.getElementById('npCF').value = "";
+          document.getElementById('npComune').value = "";
+          document.getElementById('npTel').value = "";
+          document.getElementById('npEmail').value = "";
+        }
+        document.getElementById('npPolizza').value = "";
+        document.getElementById('npData').value = "";
+        document.getElementById('npPremio').value = "";
+        document.getElementById('npTarga').value = "";
+        document.getElementById('modalPolizza').style.display = 'block';
+      }
       
       function apriModalModifica(profIndex, polIndex) {
         var prof = profiliTrovati[profIndex];
         var p = prof.polizze[polIndex];
         currentPolizzaOriginale = p.numero;
+        currentRowIndex = p.rowIndex || null;
         
         document.getElementById('mpCompagnia').value = p.compagnia;
         document.getElementById('mpContraente').value = prof.anagrafica.nome;
@@ -387,7 +968,7 @@
         document.getElementById('mpPolizza').value = p.numero;
         document.getElementById('mpData').value = p.scadenza;
         document.getElementById('mpPremio').value = p.premio;
-        document.getElementById('mpFrazionamento').value = p.frazionamento;
+        document.getElementById('mpFrazionamento').value = (p.frazionamento || "ANNUALE").toUpperCase();
         document.getElementById('mpCF').value = prof.anagrafica.codFiscale;
         document.getElementById('mpTarga').value = p.targa || "";
         document.getElementById('mpComune').value = prof.anagrafica.comune || "";
